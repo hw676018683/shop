@@ -1,0 +1,8 @@
+<% @products.each do |product| %>
+  <%= image_tag product.main_img %>
+  <%= link_to product.name, product_path(product)%>
+  <% product.skulists.each do |skulist| %>
+    <% prices << skulist.price %>
+  <% end %> 
+  ￥:<% prices.min %>
+<% end %>
