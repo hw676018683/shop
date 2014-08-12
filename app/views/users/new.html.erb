@@ -1,0 +1,14 @@
+<% provide :title, '注册' %>
+
+<h1>注册</h1>
+<%= form_for @user do |f| %>
+  <%= f.label '邮箱' %>
+  <%= f.text_field :email %>
+
+  <%= f.label '密码' %>
+  <%= f.password_field :password %>
+  <%= f.label '确认密码' %>
+  <%= f.password_field :password_confirmation %>
+
+  <%= f.submit '注册' %>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811032150) do
+ActiveRecord::Schema.define(version: 20140812093157) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140811032150) do
     t.integer  "buy_limit"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "store_id"
   end
 
   add_index "products", ["name"], name: "index_products_on_name"
@@ -62,5 +63,28 @@ ActiveRecord::Schema.define(version: 20140811032150) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "stores", force: true do |t|
+    t.string   "name"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "remember_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "province"
+    t.string   "city"
+    t.string   "address"
+    t.integer  "phone"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
 end

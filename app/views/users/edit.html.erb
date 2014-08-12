@@ -1,0 +1,21 @@
+<% provide :title, '修改' %>
+<div class="ftp">
+  <p id="back">返回</p>
+</div>
+<div class="fsp"></div>
+<div>
+  <%= form_for @user do |f| %>
+  <div class="content">
+    <%= f.label '姓名' %>
+    <%= f.text_field :name, class:'sw' %>
+    <%= f.label '手机' %>
+    <%= f.text_field :phone, class:'sw' %>
+    <%= f.label '省份' %>
+    <%= f.text_field :province, class:'sw' %>
+    <%= f.label '城市' %>
+    <%= f.text_field :city, class:'sw' %>
+    <%= f.label '地址' %>
+    <%= f.text_field :address, class:'sw' %></div>
+  <%= f.submit '保存', class: 'pure-button pure-button-primary' %>
+  <% end %>
+</div>

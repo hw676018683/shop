@@ -1,5 +1,5 @@
 class Skulist < ActiveRecord::Base
   belongs_to :product
 
-  has_many :skucates
+  has_one :skucate
 end

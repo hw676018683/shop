@@ -1,0 +1,59 @@
+<% provide :title, @shop.name %>
+<div class="ftp">
+    <p>Hi</p>
+    <p id="account">我的账号</p>
+    <img class="but" id="shopc" src="/assets/购物车.jpg"/>
+    <img class="but" id="shopr" src="/assets/交易记录.jpg"/>
+    <img class="but" id="messg" src="/assets/消息.jpg">
+  </div>
+  <div class="fsp"></div>
+  <div class="bg">
+    <img class="bg" src="/assets/背景.jpg">
+  </div>
+  <div class="logo">
+    <img class="logo" src="/assets/logo.jpg">
+    <p class="logo"><%= @shop.name %></p><br/>
+    <p class="clean logo">店铺标语，小介绍</p>
+  </div>
+  <button id="pure-button keep" class="keep">收藏</button>
+  <div id="picplayer" class="picplayer"> 
+    <script type="text/javascript">
+    var p = $('#picplayer'); 
+        var pics1 = [{url:'/assets/s1.jpg',link:'#',time:5000},
+               {url:'/assets/s2.jpg',link:'#',time:5000},
+               {url:'/assets/s3.jpg',link:'#',time:5000},
+               {url:'/assets/s4.jpg',link:'#',time:5000}]; 
+        initPicPlayer(pics1,p.css('width').split('px')[0],p.css('height').split('px')[0]); </script>
+  </div>
+  
+  <%= render @categories %>
+
+  <div class="btp">
+    <div class="pure-g">
+      <button id="sort" class="bc pure-button pure-u-1-3">商品选择</button>
+      <button id="event" class="bc pure-button pure-u-1-3">精彩活动</button>
+      <button id="abus" class="bc pure-button pure-u-1-3">关于我们</button>
+    </div>
+  </div>
+  <div id="spanel" class="pure-menu pure-menu-open panel1" style="width:33%">
+    <ul>
+      <li><a href="search.html">商品搜索</a></li>
+
+      <% @categories.each do |category| %>
+        <li><a href="#"><%= category.name %></a></li>
+      <% end %>
+        
+    </ul>
+    </div>
+    <div id="epanel" class="pure-menu pure-menu-open panel2" style="width:33%">
+    <ul>
+            <li><a href="#">敬请期待</a></li>
+        </ul>
+    </div>
+    <div id="apanel" class="pure-menu pure-menu-open panel3" style="width:33%">
+    <ul>
+            <li><a href="#">小店介绍</a></li>
+            <li><a href="#">关于公司</a></li>
+        </ul>
+    </div>
+  <div class="bsp"></div>

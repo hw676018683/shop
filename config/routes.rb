@@ -53,7 +53,15 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  root 'product#index'
+  root 'stores#index'
 
-  resources :products
+  get 'products/home'
+
+  resources :products, :users
+  resources :sessions, only: [:create, :destroy]
+
+  match '/signup', to: 'users#new', via: 'get'
+  match '/signin', to: 'sessions#new', via: 'get'
+  match '/signout', to: 'sessions#destroy', via: 'delete'
+    
 end
