@@ -1,21 +1,24 @@
 <% provide :title, '修改' %>
 <div class="ftp">
-  <p id="back">返回</p>
+  <p><%= link_to '返回', root_path %></p>
 </div>
 <div class="fsp"></div>
-<div>
+<div class="pure-form" >
   <%= form_for @user do |f| %>
-  <div class="content">
-    <%= f.label '姓名' %>
-    <%= f.text_field :name, class:'sw' %>
-    <%= f.label '手机' %>
-    <%= f.text_field :phone, class:'sw' %>
-    <%= f.label '省份' %>
-    <%= f.text_field :province, class:'sw' %>
-    <%= f.label '城市' %>
-    <%= f.text_field :city, class:'sw' %>
-    <%= f.label '地址' %>
-    <%= f.text_field :address, class:'sw' %></div>
-  <%= f.submit '保存', class: 'pure-button pure-button-primary' %>
+    <div class="headsign">
+      <p class="sign">我的信息(请仔细填写收货地址)</p>
+    </div>
+    <%= f.label '姓名:', class:'sign' %>
+    <%= f.text_field :name, class:'sign' %>
+    <%= f.label '手机:', class:'sign' %>
+    <%= f.text_field :phone, class:'sign' %>
+    <%= f.label '省份:', class:'sign' %>
+    <%= f.text_field :province, class:'sign' %>
+    <%= f.label '城市:', class:'sign' %>
+    <%= f.text_field :city, class:'sign' %>
+    <%= f.label '地址:', class:'sign' %>
+    <%= f.text_field :address, class:'sign' %>
+    
+    <%= f.button '保存', class: 'pure-button pure-button-primary sign' %>
   <% end %>
 </div>

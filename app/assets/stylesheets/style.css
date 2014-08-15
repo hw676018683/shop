@@ -6,7 +6,9 @@
         .ftp .but {max-height: 60%;float: right;margin-top:3%;margin-right: 3%;}
         .ftp p {float:left;margin-top: 4%;margin-left:1%; }
         .fsp {height:45px;width:100%;float:top;}  
-        .btp {position:fixed;bottom:0px;left:0px;background-color: #ebebeb;height: 37px;width:100%;}   
+        .bot {position:fixed;bottom:0px;left:0px;background-color: #ebebeb;height: 37px;width:100%;}   
         .bsp {height:36px;width:100%;}
+        .btm {position:fixed;bottom:0px;left:0px;background-color: #ebebeb;height: 45px;width:100%;}
+        .bts {height:45px;width:100%;}
 	-->    
 </style>

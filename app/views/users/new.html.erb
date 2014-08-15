@@ -1,14 +1,40 @@
 <% provide :title, '注册' %>
+  <div class="ftp">
+    <p><%= link_to '返回', root_path %></p>
+  </div>
+  <div class="fsp"></div>
+  <h2>欢迎注册</h2>
+  <p class="sign">如果你已经有账号<%= link_to '点击这里登陆', signin_path %></p>
+<div class="pure-form" >
+  <%= form_for @user do |f| %>
+    <div class="headsign">
+      <p class="sign">基本信息（必填）</p>
+    </div>
+    <div>
+      <%= f.label '邮箱:', class: 'sign' %>
+      <%= f.text_field :email, class:'sign', required: true %>
 
-<h1>注册</h1>
-<%= form_for @user do |f| %>
-  <%= f.label '邮箱' %>
-  <%= f.text_field :email %>
+      <%= f.label '密码:', class: 'sign' %>
+      <%= f.password_field :password, class: 'sign', required: true %>
+      <%= f.label '确认密码:', class: 'sign' %>
+      <%= f.password_field :password_confirmation, class: 'sign', required: true %>
+    </div>
 
-  <%= f.label '密码' %>
-  <%= f.password_field :password %>
-  <%= f.label '确认密码' %>
-  <%= f.password_field :password_confirmation %>
-
-  <%= f.submit '注册' %>
-<% end %>
+    <div class="headsign">
+      <p>详细信息（选填）</p>
+    </div>
+    <div>
+      <%= f.label '姓名:', class: 'sign' %>
+      <%= f.text_field :name, class: 'sign' %>
+      <%= f.label '手机:', class: 'sign' %>
+      <%= f.text_field :phone, class: 'sign' %>
+      <%= f.label '省份:', class: 'sign' %>
+      <%= f.text_field :province, class: 'sign' %>
+      <%= f.label '城市:', class: 'sign' %>
+      <%= f.text_field :city, class: 'sign' %>
+      <%= f.label '地址:', class: 'sign' %>
+      <%= f.text_field :address, class: 'sign' %>
+      <%= f.button '注册', class: 'pure-button pure-button-primary sign' %>
+    </div>
+  <% end %>
+</div>

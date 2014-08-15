@@ -1,0 +1,10 @@
+<div id="8" class="shelf">
+  <%= link_to image_tag(product.imglists.where(main_img: true)[0].img), product_path(product) %>
+  <html><%= product.name %></html>
+  <div>
+    <label class="sup">价格:</label><b class="sup"><%= product.price %></b>
+    <span class="sto"><label>库存:</label><html><%= product.quantity %></html></span><br/>
+    
+  </div>
+  <p class="clear"></p>
+</div>  

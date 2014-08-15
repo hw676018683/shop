@@ -1,0 +1,62 @@
+  <div class="chs">
+    <div id="cho" class="chsh">
+      <p class="f">请选择规格</p>
+        <%= image_tag 'down.jpg', id: 'choi' %>
+        <p class="clear"></p>
+    </div>
+    <div id="chob" class="chob">
+      <%= form_tag show_detail_product_path(@product), method: 'post', remote: true do %> 
+        <fieldset>
+          <legend><%= @product.skucates.first.name1 unless @product.skucates.first.name1.nil? %></legend>
+          <div class="chsb pure-g">
+            <% @product.skucates.each do |skucate| %>
+              <div class="cho pure-u-1-3">
+                <%= radio_button_tag :value1, skucate.value1 %>
+                <%= label_tag skucate.value1 %>
+              </div>
+            <% end %>
+          </div>
+          <legend><%= @product.skucates.first.name2 unless @product.skucates.first.name2.nil? %></legend>
+          <div class="chsb pure-g">
+            <% @product.skucates.each do |skucate| %>
+              <div class="cho pure-u-1-3">
+                <%= radio_button_tag :value2, skucate.value2 %>
+                <%= label_tag skucate.value2 %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="num">
+            <label>数量:</label> 
+            <img id="cut" src="/assets/cut.jpg">
+            <input type="text" value="1"/>
+            <img id="add" src="/assets/add.jpg">
+          </div>
+          <div id="detail">
+            <div class="evab">
+              <label class="sup">价格:</label>
+                <b class="sup">
+                  <% if @prices.max == @prices.min %>
+                    <%= @prices.min %>
+                  <% else %>
+                    <%= @prices.min %>-<%= @prices.max %> 
+                   <% end %>
+                </b>
+              <span class="sto">
+                <label>库存:</label><html><%= @quantity %></html>
+              </span><br/>
+              <label class="old">原价：</label>
+              <strike class="old">
+                <% if @oldprices.max == @oldprices.min %>
+                  <%= @oldprices.min %>
+                <% else %>
+                  <%= @oldprices.min %>-<%= @oldprices.max %> 
+                <% end %>
+              </strike>
+            </div>
+          </div>
+          <%= button_tag "确定", class: 'pure-button bsb dp sto mr' %>
+        <% end %>
+      </fieldset>
+    </div>
+  </div>

@@ -5,7 +5,17 @@ class ProductsController < ApplicationController
   end
 
   def  show 
+    @prices = []
+    @oldprices = []
+    @quantity = 0
     @product = Product.find(params[:id])
+    @product.skucates.each do |skucate|
+      @prices << skucate.skulist.price
+      @quantity += skucate.skulist.quantity
+      if !skucate.skulist.oldprice.nil?
+        @oldprices << skucate.skulist.oldprice
+      end
+    end
   end
 
   def new
@@ -22,7 +32,12 @@ class ProductsController < ApplicationController
     end
   end
 
-  def home
-    
+  def show_detail
+    @product = Product.find(params[:id])
+    @skulist = @product.skucates.where(value1: params[:value1],value2: params[:value2])[0].skulist
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js
+    end
   end
 end

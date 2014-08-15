@@ -57,8 +57,22 @@ Rails.application.routes.draw do
 
   get 'products/home'
 
-  resources :products, :users
+  resources :products do
+    member do
+      post :show_detail
+    end
+  end
+  resources :users do
+    member do
+      get :follow
+      get :unfollow
+      get :collect
+      get :uncollect
+    end
+  end
+  resources :categories
   resources :sessions, only: [:create, :destroy]
+  resources :collecting_relationships, only: [:new, :create, :destroy]
 
   match '/signup', to: 'users#new', via: 'get'
   match '/signin', to: 'sessions#new', via: 'get'

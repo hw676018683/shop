@@ -1,13 +1,21 @@
 <% provide :title, '登录' %>
  
-<h1>登录</h1>
+<div class="ftp">
+    <p><%= link_to '返回', root_path %></p>
+  </div>
+  <div class="fsp"></div>
 
-<%= form_for :session, url: sessions_path do |f| %> 
-  <%= f.label '邮箱' %>
-  <%= f.text_field :email %>
+  <h2>欢迎登陆</h2>
+      <p class="sign">如果你还没有账号<%= link_to '点击这里注册',signup_path %></p>
+<div class="pure-form">
+  <%= form_for :session, url: sessions_path do |f| %>  
+  
+      <%= f.label '邮箱:', class: "log" %>
+      <%= f.text_field :email, class: "log" %>
 
-  <%= f.label '密码' %>
-  <%= f.password_field :password %>
-
-  <%= f.submit '登录' %>
-<% end %>
+      <%= f.label '密码:', class: "log" %>
+      <%= f.password_field :password, class: "log" %>
+    <%= f.button '登录', class: 'pure-button pure-button-primary sign' %>
+  <% end %>
+</div>
+  

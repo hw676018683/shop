@@ -1,0 +1,11 @@
+<div id="follow_form">
+  <% if !current_user.nil? %>
+    <% if current_user.follow? @product %>
+      <%= render 'unfollow' %>
+    <% else %>
+      <%= render 'follow' %>
+    <% end %>
+  <% else %>
+    <%= link_to '关注', follow_user_path(@product), class: 'insnot pure-button', id: 'keep' %>
+  <% end %>
+</div>
