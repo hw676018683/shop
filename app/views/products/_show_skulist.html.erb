@@ -11,7 +11,7 @@
           <div class="chsb pure-g">
             <% @product.skucates.each do |skucate| %>
               <div class="cho pure-u-1-3">
-                <%= radio_button_tag :value1, skucate.value1 %>
+                <%= radio_button_tag :value1, skucate.value1, true %>
                 <%= label_tag skucate.value1 %>
               </div>
             <% end %>
@@ -20,7 +20,7 @@
           <div class="chsb pure-g">
             <% @product.skucates.each do |skucate| %>
               <div class="cho pure-u-1-3">
-                <%= radio_button_tag :value2, skucate.value2 %>
+                <%= radio_button_tag :value2, skucate.value2, true %>
                 <%= label_tag skucate.value2 %>
               </div>
             <% end %>
@@ -29,13 +29,13 @@
           <div class="num">
             <label>数量:</label> 
             <img id="cut" src="/assets/cut.jpg">
-            <input type="text" value="1"/>
+            <input type="text" value="1" name="quantity" id="unitnumber"/>
             <img id="add" src="/assets/add.jpg">
           </div>
           <div id="detail">
             <div class="evab">
               <label class="sup">价格:</label>
-                <b class="sup">
+                <b class="sup" id="unitprice">
                   <% if @prices.max == @prices.min %>
                     <%= @prices.min %>
                   <% else %>
@@ -43,19 +43,10 @@
                    <% end %>
                 </b>
               <span class="sto">
-                <label>库存:</label><html><%= @quantity %></html>
-              </span><br/>
-              <label class="old">原价：</label>
-              <strike class="old">
-                <% if @oldprices.max == @oldprices.min %>
-                  <%= @oldprices.min %>
-                <% else %>
-                  <%= @oldprices.min %>-<%= @oldprices.max %> 
-                <% end %>
-              </strike>
+                <label>库存:</label><b id="quantity"><%= @quantity %></b>
+              </span><b/>
             </div>
           </div>
-          <%= button_tag "确定", class: 'pure-button bsb dp sto mr' %>
         <% end %>
       </fieldset>
     </div>

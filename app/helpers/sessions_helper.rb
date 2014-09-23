@@ -23,6 +23,13 @@ module SessionsHelper
     end
   end
 
+  def nobaby_sign
+    if cookies[:nosign_id].nil?
+      nosign_id = SecureRandom.hex(10)
+      cookies.permanent[:nosign_id] = nosign_id
+    end
+  end
+
   def store_path
     session[:return_to] = request.fullpath
   end

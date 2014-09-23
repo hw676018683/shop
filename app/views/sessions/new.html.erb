@@ -9,12 +9,12 @@
       <p class="sign">如果你还没有账号<%= link_to '点击这里注册',signup_path %></p>
 <div class="pure-form">
   <%= form_for :session, url: sessions_path do |f| %>  
-  
-      <%= f.label '邮箱:', class: "log" %>
-      <%= f.text_field :email, class: "log" %>
+ 
+    <%= f.label '邮箱:', class: "log" %>
+    <%= f.email_field :email, class: "log", required: true %>
 
-      <%= f.label '密码:', class: "log" %>
-      <%= f.password_field :password, class: "log" %>
+    <%= f.label '密码:', class: "log" %>
+    <%= f.password_field :password, class: "log", required: true %>
     <%= f.button '登录', class: 'pure-button pure-button-primary sign' %>
   <% end %>
 </div>

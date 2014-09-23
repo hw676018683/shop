@@ -73,7 +73,11 @@ Rails.application.routes.draw do
   resources :categories
   resources :sessions, only: [:create, :destroy]
   resources :collecting_relationships, only: [:new, :create, :destroy]
+  resources :cars 
 
+  match '/showcar', to: 'cars#showcar', via: 'get'
+  match '/query', to: 'products#query', via: 'post'
+  match '/search', to: 'products#search', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'

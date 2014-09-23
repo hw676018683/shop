@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815073517) do
+ActiveRecord::Schema.define(version: 20140923030600) do
+
+  create_table "carousels", force: true do |t|
+    t.integer  "store_id"
+    t.string   "picture"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cars", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "skucate_id"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -53,6 +68,14 @@ ActiveRecord::Schema.define(version: 20140815073517) do
     t.boolean  "main_img",   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "nosign_cars", force: true do |t|
+    t.integer  "skucate_id"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "nosign_id"
   end
 
   create_table "products", force: true do |t|
@@ -102,6 +125,8 @@ ActiveRecord::Schema.define(version: 20140815073517) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "background"
+    t.string   "slogan"
   end
 
   create_table "users", force: true do |t|

@@ -23,16 +23,24 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user.update_columns(user_params)
-    redirect_to root_path
+    if current_user.update_attributes(user_params)
+      redirect_to root_path
+    else
+      logger.info ":#{current_user.errors.inspect}"
+      render 'edit'
+    end
   end
 
   def follow
     @product = Product.find(params[:id])
-    current_user.follow! @product
-    respond_to do |format|
-      format.html { redirect_to product_path(@product) }
-      format.js
+    if !current_user.follow? @product
+      current_user.follow! @product
+      respond_to do |format|
+        format.html { redirect_to product_path(@product) }
+        format.js
+      end
+    else
+      redirect_to product_path(@product) 
     end
   end
 
@@ -47,10 +55,14 @@ class UsersController < ApplicationController
 
   def collect
     @store = Store.find(params[:id])
-    current_user.collect! @store
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js
+    if !current_user.collect?(@store)
+      current_user.collect! @store
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.js
+      end
+    else
+      redirect_to root_path
     end
   end
 

@@ -8,10 +8,12 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       sign_in(user)
+      addcar_to_user
       redirect_back_or root_path
     else
-      flash[:error] = '用户名或密码不正确'
+      # flash[:error] = '用户名或密码不正确'
       render 'new'
+      # render js: "alert('用户名或密码不正确');"
     end
   end
 
@@ -23,11 +25,18 @@ class SessionsController < ApplicationController
   end
 
   def redirect_back_or default
-    logger.info "#{session[:return_to]}"
-    if session[:return_to] == '/collecting_relationships'
-      redirect_to root_path
-      return
-    end
     redirect_to session[:return_to] || default
+  end
+
+  def addcar_to_user
+    items = []
+    items << NosignCar.where(nosign_id: cookies[:nosign_id])
+    logger.info("#{items[0].inspect}")
+    if !items[0].nil?  
+      items[0].each do |item|
+        current_user.cars.create(skucate_id: item.skucate_id,quantity: item.quantity)
+        item.destroy
+      end
+    end
   end
 end

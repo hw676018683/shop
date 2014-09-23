@@ -1,8 +1,11 @@
 class StoresController < ApplicationController
 
   def index
-    @categories = []
+    if current_user.nil?
+      nobaby_sign
+    end
 
+    @categories = []
     @store = Store.first
     @store.products.each do |product|
       category = Category.find(product.category_id)

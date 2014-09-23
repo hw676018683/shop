@@ -7,8 +7,9 @@
   <p class="sign">如果你已经有账号<%= link_to '点击这里登陆', signin_path %></p>
 <div class="pure-form" >
   <%= form_for @user do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>    
     <div class="headsign">
-      <p class="sign">基本信息（必填）</p>
+      <p class="sign">基本信息</p>
     </div>
     <div>
       <%= f.label '邮箱:', class: 'sign' %>
@@ -21,19 +22,19 @@
     </div>
 
     <div class="headsign">
-      <p>详细信息（选填）</p>
+      <p>详细信息</p>
     </div>
     <div>
       <%= f.label '姓名:', class: 'sign' %>
-      <%= f.text_field :name, class: 'sign' %>
+      <%= f.text_field :name, class: 'sign',required: true %>
       <%= f.label '手机:', class: 'sign' %>
-      <%= f.text_field :phone, class: 'sign' %>
+      <%= f.phone_field :phone, class: 'sign',required: true %>
       <%= f.label '省份:', class: 'sign' %>
-      <%= f.text_field :province, class: 'sign' %>
+      <%= f.text_field :province, class: 'sign',required: true %>
       <%= f.label '城市:', class: 'sign' %>
-      <%= f.text_field :city, class: 'sign' %>
+      <%= f.text_field :city, class: 'sign',required: true %>
       <%= f.label '地址:', class: 'sign' %>
-      <%= f.text_field :address, class: 'sign' %>
+      <%= f.text_field :address, class: 'sign',required: true %>
       <%= f.button '注册', class: 'pure-button pure-button-primary sign' %>
     </div>
   <% end %>

@@ -4,6 +4,9 @@ p {}
 img {max-width: 100%;}
 p.clear {clear:both;}
 h2 {margin-left: 35%;}
+.left {float:left}
+.right {float:right;}
+.invisible {display: none;}
 /*index的css样式*/
 div.bg {position:absolute;top:45px;left:0px;z-index: -1; height: 103px;margin-bottom: 10%;}
 div.logo {margin-top: 75px;height:12%;width:100%;}
@@ -20,8 +23,7 @@ img.display {max-height:100%; margin:5%;margin-top: 0;}
 p.logo {margin-bottom: 0;font-size: 115%;margin:0;}
 p.clean {margin-top: 1px;position: relative;bottom:18%;margin:0;}
 p.guide {float:left;margin-left:1%;margin-top: 3%;font-size: 1.15em;margin:0;}
-a.collect{position: absolute;right:15px;top:100px;background-color:orange;border:none;}
-a.uncollect{position: absolute;right:15px;top:100px;background-color:#d0d0d;border:none;}
+button.keep{position: absolute;right:15px;top:120px;background-color:#d0d0d0;border:none;}
 button.bc {background-color: #f5f5f5;border:solid 1px #d0d0d0;}
 ul {width:33%;}
 li {width:33%;}
@@ -35,7 +37,7 @@ p.sign {margin-left: 20%;margin-top: 2%;}
 p.ero {color:red;margin-top: 7%;}
 .headsign p{margin-left: 7%;margin-top: 5%}
 /*商品展示s1的css样式*/
-body.gray {background-color: #d0d0d0;}
+.gray {background-color: #d0d0d0;}
 .sto {float: right;margin: 2%;}
 .sup {font-size: 1.5em;color:red;}
 .old {font-size: 0.75em;color:gray;}
@@ -49,8 +51,7 @@ body.gray {background-color: #d0d0d0;}
 button.bsb {height: 80%;width:30%;margin-top: 1.5%}
 button.sc {background-color: orange;margin-left: 19%}
 button.dp {background-color: red;margin-left: 2%}
-a.insnot {width:15%;margin-left: 3%;margin-bottom: 3%;background-color: #c0c0c0;}
-a.ins {width:15%;margin-left: 3%;margin-bottom: 3%;background-color: orange;}
+button.ins {width:25%;margin-left: 3%;margin-bottom: 3%;background-color: #c0c0c0;}
 button.mr {margin-right: 10%;margin-top: 3%;}
 div.picplayer2{position:relative;overflow:hidden;width:100%;height:200px;clear:none;border:solid 1px #ccc;}
 div.ins {padding: 3%;width:95%;margin-top: 10px;background-color: white;}
@@ -76,22 +77,19 @@ div.tip {text-align: center;}
 .tip p {color:red;}
 img.ui {float:right;max-height: 80%;margin: 1%;margin-right:2%;}
 /*search的css样式*/
-input.sear {float:left;margin:3%; }
+.sear {float:left;margin:3%; }
 /*sort1的css样式*/
-div.shelf{height:23%;border-top: solid 1px #d0d0d0;background-color: white;padding:3%;padding-bottom: 0;margin-top: 1%;}
+div.shelf{height:23%;border-top: solid 1px #d0d0d0;background-color: white;padding:3%;padding-bottom: 0;}
 .shelf img {float: left;max-height: 100%;max-width: 33%;}
 .shelf html {width: 70%;}
-/*eva1的css样式*/
-div.comarea{height: 22%;padding: 2%;border-bottom: solid 1px #eeeeee;}
-div.ast {width: 100%;}
-.comarea img {max-height: 50%;float:left;}
-p.shac {margin-left: 20%;}
-img.as {max-width: 100%;}
-textarea.as {margin-left: 2%;width: 105%;height: 450px;}
-/*record的css样式*/
-div.wid {width:100.5%;}
-div.sta {background-color:black;color:#d0d0d0;text-align: center;}
-div.shre {background-color: white;margin:1%;border-radius: 5px;}
-div.time {border-bottom: solid 1px #d0d0d0;padding: 1px;}
-p.time {float: left; margin: 0;margin-top:4.4%;}
-p.sta {color:red;text-align: right;margin-right: 2%;}
+/*shopcar的css样式*/
+div.mygoods {border-bottom:solid 2px #000;padding: 2%;}
+.mygoods img {width:25%;margin-left:3%;margin-bottom: 2%; }
+.mygoods input {float: left;margin-top: 25px;font-size: 1.25em;}
+.mygoods b {float: right;}
+.saleprice {border-top:solid 1px #fff;padding: 2%;}
+.saleprice p {float: right;margin:0;}
+.pay {float:right;margin-right: 2%;}
+span.pay {margin-top: 13px;}
+b.summary {width: 60%;}
+input.number {width: 40%;float:right;margin-right: 3%;display: none;}

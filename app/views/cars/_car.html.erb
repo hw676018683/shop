@@ -1,0 +1,16 @@
+ <div class="mygoods">
+  <input class="wantpay" type="checkbox" id="wt1">
+  <div>
+    <%= image_tag car.skucate.product.main_img %>
+    <b class="summary">
+      <%= car.skucate.product.name %>
+    </b>
+    <input type="text" id="number1" class="number">
+  </div>
+  <div class="saleprice">
+    <label>现价:</label><t id="mdprice1"><%= car.skucate.skulist.price %></t>
+    <span class="old"><label>原价:</label><strike><%= car.skucate.skulist.oldprice %></strike></span>
+    <span class="right"><label>数量:</label><p class="absale" id="mdnumber1"><%= car.quantity %></p></span></br>
+    <span><label>总价:</label><p class="sto" id="mdpay1"></p></span>
+  </div>
+</div>

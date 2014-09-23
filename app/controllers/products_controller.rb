@@ -40,4 +40,20 @@ class ProductsController < ApplicationController
       format.js
     end
   end
+
+  def query
+    @skucate = Skucate.find_by(value1: params[:value1], value2: params[:value2])
+    @skulist = @skucate.try(:skulist)
+    render json: @skulist
+  end
+
+  def search
+    @products = Product.find_by_sql("select name,id from products where name like '#{params[:name]}%'")
+    if @products.nil?
+      result = Hash.new
+      result[:id] = "not found"
+      result[:message] = "product not found"
+      render json: result
+    end
+  end
 end
