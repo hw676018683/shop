@@ -9,12 +9,12 @@ namespace :db do
 end 
 
 def make_stores
-  Store.create!(name: '专属', owner_id: 1, background: '/assets/背景.jpg',
+  Store.create!(name: '专属', owner_id: 1, background: '背景.jpg',
               slogan: '这是一个标语.')
-  Carousel.create!(store_id: 1, picture: "/assets/s1.jpg")
-  Carousel.create!(store_id: 1, picture: "/assets/s2.jpg")
-  Carousel.create!(store_id: 1, picture: "/assets/s3.jpg")
-  Carousel.create!(store_id: 1, picture: "/assets/s4.jpg")
+  Carousel.create!(store_id: 1, picture: "s1.jpg")
+  Carousel.create!(store_id: 1, picture: "s2.jpg")
+  Carousel.create!(store_id: 1, picture: "s3.jpg")
+  Carousel.create!(store_id: 1, picture: "s4.jpg")
 end
 
 def make_categories
@@ -27,7 +27,7 @@ def make_products
   11.times do |n|
     name = "车-#{n+1}"
     Product.create!(name: name, category_id: 1, 
-                  main_img: '/assets/s1.jpg',
+                  main_img: 's1.jpg',
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10)
@@ -35,7 +35,7 @@ def make_products
   11.times do |n|
     name = "车-#{n+21}"
     Product.create!(name: name, category_id: 2, 
-                  main_img: '/assets/s2.jpg',
+                  main_img: 's2.jpg',
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10)
@@ -43,7 +43,7 @@ def make_products
   11.times do |n|
     name = "车-#{n+41}"
     Product.create!(name: name, category_id: 3, 
-                  main_img: '/assets/s3.jpg',
+                  main_img: 's3.jpg',
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10)
