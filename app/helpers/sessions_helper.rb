@@ -1,4 +1,4 @@
-# module SessionsHelper
+module SessionsHelper
 
 #   def sign_in(user)
 #     remember_token = User.new_remember_token
@@ -33,4 +33,4 @@
 #   def store_path
 #     session[:return_to] = request.fullpath
 #   end
-# end
+end
