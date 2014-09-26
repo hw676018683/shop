@@ -1,7 +1,7 @@
 json.(@product, :id, :name, :category_id)
 json.imglist do
   json.array! @product.imglists do |img|
-    json.img '/assests/'+img.img
+    json.img image_path(img.img)
   end
 end
 json.property do
@@ -12,7 +12,7 @@ end
 json.detail do
   json.array! @product.details do |detail|
     json.(detail, :text)
-    json.img '/assets/'+detail.img
+    json.img image_path(detail.img)
   end
 end
 json.skucate do

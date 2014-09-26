@@ -55,8 +55,6 @@ Rails.application.routes.draw do
   #   end
   root 'stores#index'
 
-  get 'products/home'
-
   resources :products do
     member do
       post :show_detail
@@ -75,11 +73,9 @@ Rails.application.routes.draw do
   resources :collecting_relationships, only: [:new, :create, :destroy]
   resources :cars 
 
-  match '/showcar', to: 'cars#showcar', via: 'get'
-  match '/query', to: 'products#query', via: 'post'
   match '/search', to: 'products#search', via: 'get'
-  match '/signup', to: 'users#new', via: 'get'
-  match '/signin', to: 'sessions#new', via: 'get'
-  match '/signout', to: 'sessions#destroy', via: 'delete'
-    
+  match '/signin', to: 'sessions#create', via: 'post'
+  match '/nosign_id', to: 'users#nosign_id', via: 'get' 
+
 end
+

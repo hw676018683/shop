@@ -59,13 +59,18 @@ def make_details
                               name2: '大小', value2: "大小-#{m+1}")
       end
     end
-    6.times do |n|
-      Skulist.create!(skucate_id: (n+1), 
-                    price: (product.price+n),
-                    quantity: (n+5), oldprice: product.price+(n+1))
+    product.skucates.each do |skucate|
+      skucate.create_skulist!(price: product.price,
+                            quantity: 30+skucate.id, oldprice: product.price)
     end
     3.times do |n|
       product.properties.create!(name: "属性-#{n+1}", value: "属性值-#{n+1}")
+    end
+    4.times do |n|
+      product.imglists.create!(img: "s#{n+3}.jpg")
+    end
+    2.times do |n|
+      product.details.create!(img: "s#{n+4}.jpg", text:"这是一个介绍")
     end
   end
 end

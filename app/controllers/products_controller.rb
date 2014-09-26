@@ -1,50 +1,15 @@
 class ProductsController < ApplicationController
-  def index
-    @products = Product.all
-    prices = []
-  end
-
+  
   def  show 
-    @prices = []
-    @oldprices = []
-    @quantity = 0
-    @product = Product.find(params[:id])
-    @product.skucates.each do |skucate|
-      @prices << skucate.skulist.price
-      @quantity += skucate.skulist.quantity
-      if !skucate.skulist.oldprice.nil?
-        @oldprices << skucate.skulist.oldprice
-      end
+    @product = Product.find_by(id: params[:id])
+    if @product.nil?
+      message = {}
+      message[:code] = 'failure'
+      message[:message] = "Couldn't find Product with 'id'=#{params[:id]}"
+      render json: message
+    else
+      render 'show.json.jbuilder'
     end
-  end
-
-  def new
-    @product = Product.new
-    @cates = Category.all
-  end
-
-  def create
-    @product = Product.new(name: params[:name], category_id: params[:category_id])
-    if @product.save
-      @product.properties.create(name: params[:p_name1], value: params[:p_value1])
-
-      redirect_to '/products/home'
-    end
-  end
-
-  def show_detail
-    @product = Product.find(params[:id])
-    @skulist = @product.skucates.where(value1: params[:value1],value2: params[:value2])[0].skulist
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js
-    end
-  end
-
-  def query
-    @skucate = Skucate.find_by(value1: params[:value1], value2: params[:value2])
-    @skulist = @skucate.try(:skulist)
-    render json: @skulist
   end
 
   def search
@@ -54,6 +19,8 @@ class ProductsController < ApplicationController
       result[:id] = "not found"
       result[:message] = "product not found"
       render json: result
+    else
+      render 'search.json.jbuilder'
     end
   end
 end

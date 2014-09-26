@@ -51,8 +51,8 @@ gem 'will_paginate'
 
 group :development do 
   gem 'quiet_assets'
-  gem "better_errors"
-  gem "binding_of_caller"
+  # gem "better_errors"
+  # gem "binding_of_caller"
 end
 
 gem 'rails_12factor', group: :production

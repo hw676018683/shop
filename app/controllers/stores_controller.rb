@@ -1,10 +1,6 @@
 class StoresController < ApplicationController
 
   def index
-    if current_user.nil?
-      nobaby_sign
-    end
-
     @categories = []
     @store = Store.first
     @store.products.each do |product|
@@ -13,5 +9,6 @@ class StoresController < ApplicationController
           @categories << category
         end
     end
+    render 'index.json.jbuilder'
   end
 end

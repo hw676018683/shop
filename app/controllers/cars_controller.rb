@@ -2,68 +2,95 @@ class CarsController < ApplicationController
    # skip_before_filter :verify_authenticity_token, only: :create 
   
   def create
-    skucate = Skucate.find_by(value1: params[:value1], value2: params[:value2])
-    if current_user.nil?
-      nosign_id = cookies[:nosign_id]
-      NosignCar.create(nosign_id: nosign_id, skucate_id: skucate.id,
-                       quantity: params[:quantity])
+    message = {}
+    if params[:nosign_id].nil?
+      if !user_exist? 
+        return 
+      end
+      skucate = Skucate.find_by(product_id: params[:product_id], value1: params[:value1], value2: params[:value2])
+      user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
+      user.cars.create!(skucate_id: skucate.id, quantity: params[:quantity])
     else
-      current_user.cars.create(skucate_id: skucate.id, quantity: params[:quantity])
+      NosignCar.create(nosign_id: params[:nosign_id], skucate_id: skucate.id,
+                       quantity: params[:quantity])
     end
-    redirect_to skucate.product
+    message[:code] = 'success'
+    render json: message
   end
 
   def update
-    if current_user.nil?
-      @car = NosignCar.find(params[:id])
-      @cars = NosignCar.where(nosign_id: cookies[:nosign_id])
+    message = {}
+    if !params[:nosign_id].nil?
+      @car = NosignCar.find_by(id: params[:id])
+      @cars = NosignCar.where(nosign_id: params[:nosign_id])
     else
-      @car = Car.find(params[:id])
-      @cars = Car.where(user_id: current_user.id)
+      if !user_exist? 
+        return 
+      end
+      user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
+      @car = Car.find_by(id: params[:id])
+      @cars = Car.where(user_id: user.id)
     end
     
     if @car.in? @cars
       @car.update(quantity: params[:quantity])
-      render nothing: true
+      message[:code] = 'success'
+      render json: message
     else
-      result = Hash.new
-      result[:id] = "forbidden"
-      result[:message] = "Please modify your car!"
-      render json: result, status: 403
+      message[:code] = "failure"
+      message[:message] = "Please modify your car!"
+      render json: message, status: 403
     end
-
   end
 
   def destroy
-    if current_user.nil?
-      @car = NosignCar.find(params[:id])
+    message = {}
+    if !params[:nosign_id].nil?
+      @car = NosignCar.find_by(id: params[:id])
       @cars = NosignCar.where(nosign_id: cookies[:nosign_id])
     else
-      @car = Car.find(params[:id])
-      @cars = Car.where(user_id: current_user.id)
+      if !user_exist? 
+        return 
+      end
+      user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
+      @car = Car.find_by(id: params[:id])
+      @cars = Car.where(user_id: user.id)
     end
     
     if @car.in? @cars
       @car.destroy
-      render nothing: true
+      message[:code] = 'success'
+      render json: message
     else
-      result = Hash.new
-      result[:id] = "forbidden"
-      result[:message] = "Please delete your car!"
-      render json: result, status: 403
+      message[:code] = "failure"
+      message[:message] = "Please delete your car!"
+      render json: message, status: 403
     end
-
   end
 
-  def showcar
-    if current_user.nil?
-      @items = NosignCar.where('nosign_id',cookies[:nosign_id])
+  def index
+    if !params[:nosign_id].nil?
+      @items = NosignCar.where(nosign_id: params[:nosign_id])
     else
-      @items = Car.where('user_id',current_user.id)
+      if !user_exist? 
+        return 
+      end
+      user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
+      @items = Car.where('user_id',user.id)
     end
-
+    render 'index.json.jbuilder'
   end
 
   private
+
+  def user_exist?
+    user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
+    if user.nil?
+      message = {}
+      message[:code] = 'failure'
+      render json: message
+      return false
+    end
+  end
 
 end

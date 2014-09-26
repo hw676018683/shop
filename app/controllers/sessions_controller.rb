@@ -1,40 +1,29 @@
 class SessionsController < ApplicationController
 
-  def new
-    
-  end
-
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])
-      sign_in(user)
-      addcar_to_user
-      redirect_back_or root_path
+    message = {}
+    user = User.find_by(email: params[:email].downcase)
+    if user && user.authenticate(params[:password])
+      remember_token = User.new_remember_token
+      user.update_attribute('remember_token', User.encrypt(remember_token))
+      message[:code] = 'success'
+      message[:user_id] = user.id
+      message[:remember_token] = remember_token
+      add_to_cart(user)
     else
-      # flash[:error] = '用户名或密码不正确'
-      render 'new'
-      # render js: "alert('用户名或密码不正确');"
+      message[:code] = 'failure' 
     end
+    render json: message
   end
 
-  def destroy
-    cookies.delete :remember_token
-    current_user = nil
-    session.delete :return_to
-    redirect_to root_path
-  end
+  private
 
-  def redirect_back_or default
-    redirect_to session[:return_to] || default
-  end
-
-  def addcar_to_user
+  def add_to_cart(user)
     items = []
-    items << NosignCar.where(nosign_id: cookies[:nosign_id])
-    logger.info("#{items[0].inspect}")
+    items << NosignCar.where(nosign_id: params[:nosign_id])
     if !items[0].nil?  
       items[0].each do |item|
-        current_user.cars.create(skucate_id: item.skucate_id,quantity: item.quantity)
+        user.cars.create(skucate_id: item.skucate_id,quantity: item.quantity)
         item.destroy
       end
     end
