@@ -7,4 +7,7 @@ class Product < ActiveRecord::Base
   has_many :imglists
 
   belongs_to :category
+
+  validates :name, presence: true
+  validates :category_id, presence: true
 end

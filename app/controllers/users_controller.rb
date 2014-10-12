@@ -105,7 +105,6 @@ class UsersController < ApplicationController
   end
 
   def user_exist?
-    logger.info("#{params[:remember_token]}")
     user = User.find_by(remember_token: User.encrypt(params[:remember_token]), id: params[:id])
     if user.nil?
       message = {}

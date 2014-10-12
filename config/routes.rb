@@ -68,6 +68,11 @@ Rails.application.routes.draw do
       get :uncollect
     end
   end
+  namespace :admin do
+    resources :products, only: [:create]
+    resources :imglists, only: [:create]
+    resources :details, only: [:create]
+  end
   resources :categories
   resources :sessions, only: [:create, :destroy]
   resources :collecting_relationships, only: [:new, :create, :destroy]
