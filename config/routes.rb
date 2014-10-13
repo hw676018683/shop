@@ -55,11 +55,7 @@ Rails.application.routes.draw do
   #   end
   root 'stores#index'
 
-  resources :products do
-    member do
-      post :show_detail
-    end
-  end
+  resources :products
   resources :users do
     member do
       get :follow
@@ -69,9 +65,20 @@ Rails.application.routes.draw do
     end
   end
   namespace :admin do
-    resources :products, only: [:create]
+    resources :products, only: [:create, :destroy] do 
+      member do
+        get :drop_product
+        get :pick_product
+      end
+      collection do 
+        get :show_down_products
+        get :show_up_products
+      end
+    end
     resources :imglists, only: [:create]
     resources :details, only: [:create]
+    resources :categories, only: [:create, :index, :update]
+    resources :details , only: :create
   end
   resources :categories
   resources :sessions, only: [:create, :destroy]
@@ -80,7 +87,8 @@ Rails.application.routes.draw do
 
   match '/search', to: 'products#search', via: 'get'
   match '/signin', to: 'sessions#create', via: 'post'
-  match '/nosign_id', to: 'users#nosign_id', via: 'get' 
+  match '/nosign_id', to: 'users#nosign_id', via: 'get'
+  match '/admin/signin', to: 'owners#signin', via: 'post' 
 
 end
 

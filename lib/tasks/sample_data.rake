@@ -5,6 +5,7 @@ namespace :db do
     make_categories
     make_products
     make_details
+    make_owner
   end 
 end 
 
@@ -18,9 +19,9 @@ def make_stores
 end
 
 def make_categories
-  Category.create!(name: "奔驰")
-  Category.create!(name: "法拉利")
-  Category.create!(name: "奥迪")
+  Category.create!(name: "奔驰", store_id: 1)
+  Category.create!(name: "法拉利", store_id: 1)
+  Category.create!(name: "奥迪", store_id: 1)
 end
 
 def make_products
@@ -48,6 +49,15 @@ def make_products
                   price: (n+1)*10000,
                   quantity: (n+1)*10)
   end
+  3.times do |n|
+    name = "车-down-#{n}"
+    Product.create!(name: name, category_id: 1, 
+                  main_img: 's1.jpg',
+                  store_id: 1,
+                  price: (n+1)*10000,
+                  quantity: (n+1)*10,
+                  status: false)
+  end
 end
 
 def make_details
@@ -72,6 +82,10 @@ def make_details
     2.times do |n|
       product.details.create!(img: "s#{n+4}.jpg", text:"这是一个介绍")
     end
+  end
+
+  def make_owner
+    Admin::Owner.create(email: '110@qq.com', password: '123456')
   end
 end
 

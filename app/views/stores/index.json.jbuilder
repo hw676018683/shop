@@ -9,7 +9,7 @@ json.category do
   json.array! @categories do |cate|
     json.(cate, :id, :name)
     json.product do
-      json.array! cate.products.first(2) do |product|
+      json.array! cate.products.where(status: true).first(2) do |product|
         json.product_id product.id
         json.picture image_path(product.main_img)
       end

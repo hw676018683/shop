@@ -1,11 +1,11 @@
 class Admin::ImglistsController < ApplicationController
 
-  before_action :owner_exist?, only: [:create, :destroy]
+  before_action :owner_exist?
 
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
-    @product.imglists.create(img: params[:img])
+    @product.details.create(img: params[:img])
     message[:code] = 'success'
     render json: message
   end
@@ -13,7 +13,7 @@ class Admin::ImglistsController < ApplicationController
   private
 
   def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: owner.encrypt(params[:remember_token]))
+    @owner = Admin::Owner.find_by(remember_token: Owner.encrypt(params[:remember_token]))
     if @owner.nil?
       message = {}
       message[:code] = 'failure'

@@ -1,6 +1,6 @@
 class Admin::DetailsController < ApplicationController
 
-  before_action :owner_exist?, only: [:create, :destroy]
+  before_action :owner_exist?
 
   def create
     message = {}
@@ -13,7 +13,7 @@ class Admin::DetailsController < ApplicationController
   private
 
   def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: owner.encrypt(params[:remember_token]))
+    @owner = Admin::Owner.find_by(remember_token: Owner.encrypt(params[:remember_token]))
     if @owner.nil?
       message = {}
       message[:code] = 'failure'
