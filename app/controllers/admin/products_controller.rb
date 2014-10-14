@@ -15,7 +15,7 @@ class Admin::ProductsController < ApplicationController
     quantity = []
     flag1 = true
     flag2 = true
-    @product = Product.new(name: params[:name], category_id: params[:category_id], store_id: @owner.store.id)
+    @product = Product.new(name: params[:name], category_id: params[:category_id], store_id: @owner.store.id, main_img: params[:picture])
     properties = JSON.parse(params[:property])
     properties.each do |property|
       if Property.new(property).invalid?
