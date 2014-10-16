@@ -3,5 +3,5 @@ class Store < ActiveRecord::Base
   has_many :products
   has_many :carousels
 
-  mount_uploader :background, AvatarUploader
+  mount_uploader :background, StoreUploader
 end
