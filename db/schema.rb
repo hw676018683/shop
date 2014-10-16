@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013074351) do
+ActiveRecord::Schema.define(version: 20141016081025) do
 
   create_table "admin_owners", force: true do |t|
     t.string   "email"
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(version: 20141013074351) do
   end
 
   add_index "collecting_relationships", ["store_id", "user_id"], name: "index_collecting_relationships_on_store_id_and_user_id", unique: true
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.text     "content"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "details", force: true do |t|
     t.integer  "product_id"

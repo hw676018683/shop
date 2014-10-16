@@ -55,13 +55,17 @@ Rails.application.routes.draw do
   #   end
   root 'stores#index'
 
-  resources :products
+  resources :products do 
+    resources :comments, only: [:index, :create]
+  end
   resources :users do
     member do
       get :follow
       get :unfollow
       get :collect
       get :uncollect
+      get :following
+      get :collecting
     end
   end
   namespace :admin do
@@ -89,6 +93,7 @@ Rails.application.routes.draw do
   match '/signin', to: 'sessions#create', via: 'post'
   match '/nosign_id', to: 'users#nosign_id', via: 'get'
   match '/admin/signin', to: 'owners#signin', via: 'post' 
+
 
 end
 

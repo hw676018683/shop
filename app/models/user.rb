@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :following_products, through: :following_relationships, source: :followed
 
   has_many :cars
+  has_many :comments
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, uniqueness: { case_sensitive: false },

@@ -7,6 +7,8 @@ class Product < ActiveRecord::Base
   has_many :properties, dependent: :destroy
   has_many :imglists, dependent: :destroy
 
+  has_many :comments
+
   validates :name, presence: true
   validates :category_id, presence: true
 
