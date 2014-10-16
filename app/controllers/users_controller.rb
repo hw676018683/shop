@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   # before_action :test
-  before_action :@user_exist?, except: [:nosign_id]
+  before_action :user_exist?, except: [:nosign_id]
   before_action :product_exist?, only: [:follow, :unfollow]
   before_action :store_exist?, only: [:collect, :uncollect]
 
