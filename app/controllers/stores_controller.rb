@@ -2,7 +2,7 @@ class StoresController < ApplicationController
 
   def index
     @categories = []
-    @store = Store.first
+    @store = Store.find_by(id: 1)
     @store.products.where(status: true).each do |product|
       category = Category.find(product.category_id)
         if !category.in?(@categories)

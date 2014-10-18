@@ -32,7 +32,7 @@ def make_products
     file = File.open File.expand_path(Dir["public/public/upload/s#{n+2}*.jpg"].first)
     uploader.store! file
     name = "车-#{n+1}"
-    Product.create!(name: name, category_id: 1, 
+    pro = Product.create!(name: name, category_id: 1, 
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10,
