@@ -11,7 +11,7 @@ end
 
 def make_stores
   uploader = AvatarUploader.new
-  background = Dir['public/public/upload/背景*.jpg'].first
+  background = Dir['public/public/upload/background*.jpg'].first
   uploader.store! File.open File.expand_path(background)
   Store.create!(name: '专属', owner_id: 1, background: uploader,
               slogan: '这是一个标语.')
