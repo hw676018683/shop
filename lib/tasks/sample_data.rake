@@ -15,10 +15,9 @@ def make_stores
   uploader.store! File.open File.expand_path(background)
   Store.create!(name: '专属', owner_id: 1, background: uploader,
               slogan: '这是一个标语.')
-  # Dir['public/*.jpg'].each do |file|
-  #   uploader.store! File.open(File.expand_path(file)) 
-  #   Carousel.create!(store_id: 1, picture: uploader)
-  # end
+  4.times do |x|
+    Carousel.create!(store_id: 1, picture: "s#{n+1}.jpg")
+  end
 end
 
 def make_categories
@@ -30,7 +29,6 @@ end
 def make_products
   uploader = AvatarUploader.new
   11.times do |n|
-    p "public/public/upload/s#{n+2}*.jpg"
     file = File.open File.expand_path(Dir["public/public/upload/s#{n+2}*.jpg"].first)
     uploader.store! file
     name = "车-#{n+1}"
@@ -81,12 +79,12 @@ def make_details
     3.times do |n|
       product.properties.create!(name: "属性-#{n+1}", value: "属性值-#{n+1}")
     end
-    4.times do |n|
+    3.times do |n|
       file = Dir["public/public/upload/s#{n+1}*.jpg"].first
       uploader.store! File.open(File.expand_path(file)) 
       product.imglists.create!(img: uploader)
     end
-    2.times do |n|
+    1.times do |n|
       file = Dir["public/public/upload/s#{n+4}*.jpg"].first
       uploader.store! File.open(File.expand_path(file)) 
       product.details.create!(img: uploader, text:"这是一个介绍")
