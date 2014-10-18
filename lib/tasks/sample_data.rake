@@ -15,7 +15,7 @@ def make_stores
   uploader.store! File.open File.expand_path(background)
   Store.create!(name: '专属', owner_id: 1, background: uploader,
               slogan: '这是一个标语.')
-  4.times do |x|
+  4.times do |n|
     Carousel.create!(store_id: 1, picture: "s#{n+1}.jpg")
   end
 end
