@@ -10,12 +10,15 @@ namespace :db do
 end 
 
 def make_stores
-  Store.create!(name: '专属', owner_id: 1, background: '背景.jpg',
+  uploader = AvatarUploader.new
+  background = Dir['public/public/upload/背景*.jpg'].first
+  uploader.store! File.open File.expand_path(background)
+  Store.create!(name: '专属', owner_id: 1, background: uploader,
               slogan: '这是一个标语.')
-  Carousel.create!(store_id: 1, picture: "s1.jpg")
-  Carousel.create!(store_id: 1, picture: "s2.jpg")
-  Carousel.create!(store_id: 1, picture: "s3.jpg")
-  Carousel.create!(store_id: 1, picture: "s4.jpg")
+  # Dir['public/*.jpg'].each do |file|
+  #   uploader.store! File.open(File.expand_path(file)) 
+  #   Carousel.create!(store_id: 1, picture: uploader)
+  # end
 end
 
 def make_categories
@@ -25,18 +28,21 @@ def make_categories
 end
 
 def make_products
+  uploader = AvatarUploader.new
   11.times do |n|
+    p "public/public/upload/s#{n+2}*.jpg"
+    file = File.open File.expand_path(Dir["public/public/upload/s#{n+2}*.jpg"].first)
+    uploader.store! file
     name = "车-#{n+1}"
     Product.create!(name: name, category_id: 1, 
-                  main_img: 's1.jpg',
                   store_id: 1,
                   price: (n+1)*10000,
-                  quantity: (n+1)*10)
+                  quantity: (n+1)*10,
+                  main_img: uploader)
   end
   11.times do |n|
     name = "车-#{n+21}"
     Product.create!(name: name, category_id: 2, 
-                  main_img: 's2.jpg',
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10)
@@ -44,7 +50,6 @@ def make_products
   11.times do |n|
     name = "车-#{n+41}"
     Product.create!(name: name, category_id: 3, 
-                  main_img: 's3.jpg',
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10)
@@ -52,7 +57,6 @@ def make_products
   3.times do |n|
     name = "车-down-#{n}"
     Product.create!(name: name, category_id: 1, 
-                  main_img: 's1.jpg',
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10,
@@ -61,6 +65,7 @@ def make_products
 end
 
 def make_details
+  uploader = AvatarUploader.new
   @products = Product.all
   @products.each do |product|
     3.times do |n|
@@ -77,10 +82,14 @@ def make_details
       product.properties.create!(name: "属性-#{n+1}", value: "属性值-#{n+1}")
     end
     4.times do |n|
-      product.imglists.create!(img: "s#{n+3}.jpg")
+      file = Dir["public/public/upload/s#{n+1}*.jpg"].first
+      uploader.store! File.open(File.expand_path(file)) 
+      product.imglists.create!(img: uploader)
     end
     2.times do |n|
-      product.details.create!(img: "s#{n+4}.jpg", text:"这是一个介绍")
+      file = Dir["public/public/upload/s#{n+4}*.jpg"].first
+      uploader.store! File.open(File.expand_path(file)) 
+      product.details.create!(img: uploader, text:"这是一个介绍")
     end
   end
 
