@@ -114,7 +114,7 @@ class Admin::ProductsController < ApplicationController
   private
 
   def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: Owner.encrypt(params[:remember_token]))
+    @owner = Admin::Owner.find_by(remember_token: Admin::Owner.encrypt(params[:remember_token]))
     if @owner.nil?
       message = {}
       message[:code] = 'failure'

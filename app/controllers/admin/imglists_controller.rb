@@ -1,5 +1,5 @@
 class Admin::ImglistsController < ApplicationController
-
+  # before_action :test
   before_action :owner_exist?
 
   def create
@@ -13,11 +13,15 @@ class Admin::ImglistsController < ApplicationController
   private
 
   def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: Owner.encrypt(params[:remember_token]))
+    @owner = Admin::Owner.find_by(remember_token: Admin::Owner.encrypt(params[:remember_token]))
     if @owner.nil?
       message = {}
       message[:code] = 'failure'
       render json: message
     end
+  end
+
+  def test
+    @owner = Admin::Owner.first
   end
 end
