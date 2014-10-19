@@ -6,6 +6,7 @@ namespace :db do
     make_products
     make_details
     make_owner
+    make_user
   end 
 end 
 
@@ -94,5 +95,10 @@ def make_details
   def make_owner
     Admin::Owner.create(email: '110@qq.com', password: '123456')
   end
+
+  def make_user
+    User.create!(email: '111@qq.com', password: 'asd110', phone: '12345678901')
+  end
+
 end
 
