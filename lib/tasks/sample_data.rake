@@ -92,7 +92,7 @@ def make_details
   end
 
   def make_user
-    User.create!(name: 'Love Tristana', email: '111@qq.com', password: 'asd110', phone: '12345678901')
+    User.create!(name: 'Love Tristana', email: '111@qq.com', password: 'asd110', phone: '1234567890')
   end
 
   def make_comments
