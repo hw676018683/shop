@@ -1,17 +1,18 @@
 class UsersController < ApplicationController
 
   # before_action :test
-  before_action :user_exist?, except: [:nosign_id]
+  before_action :user_exist?, except: [:create, :nosign_id]
   before_action :product_exist?, only: [:follow, :unfollow]
   before_action :store_exist?, only: [:collect, :uncollect]
 
   def create
     message = {}
+    @user = User.new(user_params)
     if @user.save
       remember_token = User.new_remember_token
       @user.update(remember_token: User.encrypt(remember_token))
       message[:code] = 'success'
-      message[:user_id] = user.id
+      message[:user_id] = @user.id
       message[:remember_token] = remember_token
     else
       message[:code] = 'failure'
@@ -115,6 +116,7 @@ class UsersController < ApplicationController
 
   def user_exist?
     @user = User.find_by(remember_token: User.encrypt(params[:remember_token]), id: params[:id])
+    p @user
     if @user.nil?
       message = {}
       message[:code] = 'failure'

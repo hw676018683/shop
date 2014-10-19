@@ -12,9 +12,7 @@ end
 
 def make_stores
   uploader = AvatarUploader.new
-  background = Dir['public/public/upload/background*.jpg'].first
-  uploader.store! File.open File.expand_path(background)
-  Store.create!(name: '专属', owner_id: 1, background: uploader,
+  Store.create!(name: '专属', owner_id: 1,
               slogan: '这是一个标语.')
   4.times do |n|
     Carousel.create!(store_id: 1, picture: "s#{n+1}.jpg")
@@ -30,14 +28,11 @@ end
 def make_products
   uploader = AvatarUploader.new
   11.times do |n|
-    file = File.open File.expand_path(Dir["public/public/upload/s#{n+2}*.jpg"].first)
-    uploader.store! file
     name = "车-#{n+1}"
     pro = Product.create!(name: name, category_id: 1, 
                   store_id: 1,
                   price: (n+1)*10000,
-                  quantity: (n+1)*10,
-                  main_img: uploader)
+                  quantity: (n+1)*10)
   end
   11.times do |n|
     name = "车-#{n+21}"
@@ -80,16 +75,16 @@ def make_details
     3.times do |n|
       product.properties.create!(name: "属性-#{n+1}", value: "属性值-#{n+1}")
     end
-    3.times do |n|
-      file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-      uploader.store! File.open(File.expand_path(file)) 
-      product.imglists.create!(img: uploader)
-    end
-    1.times do |n|
-      file = Dir["public/public/upload/s#{n+4}*.jpg"].first
-      uploader.store! File.open(File.expand_path(file)) 
-      product.details.create!(img: uploader, text:"这是一个介绍")
-    end
+    # 3.times do |n|
+    #   file = Dir["public/public/upload/s#{n+1}*.jpg"].first
+    #   uploader.store! File.open(File.expand_path(file)) 
+    #   product.imglists.create!(img: uploader)
+    # end
+    # 1.times do |n|
+    #   file = Dir["public/public/upload/s#{n+4}*.jpg"].first
+    #   uploader.store! File.open(File.expand_path(file)) 
+    #   product.details.create!(img: uploader, text:"这是一个介绍")
+    # end
   end
 
   def make_owner
@@ -97,7 +92,13 @@ def make_details
   end
 
   def make_user
-    User.create!(email: '111@qq.com', password: 'asd110', phone: '12345678901')
+    User.create!(name: 'Love Tristana', email: '111@qq.com', password: 'asd110', phone: '12345678901')
+  end
+
+  def make_comments
+    10.times do |n|
+      Comment.create!(user_id: 1, product_id: n+1, content: '沙发沙发沙发')
+    end
   end
 
 end

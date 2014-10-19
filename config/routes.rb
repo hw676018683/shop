@@ -83,6 +83,7 @@ Rails.application.routes.draw do
     resources :details, only: [:create]
     resources :categories, only: [:create, :index, :update]
     resources :details , only: :create
+    resources :stores, only: :update
   end
   resources :categories
   resources :sessions, only: [:create, :destroy]
@@ -92,7 +93,9 @@ Rails.application.routes.draw do
   match '/search', to: 'products#search', via: 'get'
   match '/signin', to: 'sessions#create', via: 'post'
   match '/nosign_id', to: 'users#nosign_id', via: 'get'
-  match '/admin/signin', to: 'owners#signin', via: 'post' 
+  namespace :admin do
+    match '/signin', to: 'owners#signin', via: 'post' 
+  end
 
 
 end

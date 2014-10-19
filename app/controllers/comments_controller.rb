@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
       message[:code] = 'failure'
       message[:errors] = @comment.errors.full_messages.to_s
     end
-    render message
+    render json: message
   end
 
   def index

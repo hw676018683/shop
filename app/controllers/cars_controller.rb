@@ -3,13 +3,12 @@ class CarsController < ApplicationController
   
   def create
     message = {}
+    skucate = Skucate.find_by(product_id: params[:product_id], value1: params[:value1], value2: params[:value2])
     if params[:nosign_id].nil?
       if !user_exist? 
         return 
       end
-      skucate = Skucate.find_by(product_id: params[:product_id], value1: params[:value1], value2: params[:value2])
-      user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
-      user.cars.create!(skucate_id: skucate.id, quantity: params[:quantity])
+      @user.cars.create!(skucate_id: skucate.id, quantity: params[:quantity])
     else
       NosignCar.create(nosign_id: params[:nosign_id], skucate_id: skucate.id,
                        quantity: params[:quantity])
@@ -27,9 +26,8 @@ class CarsController < ApplicationController
       if !user_exist? 
         return 
       end
-      user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
       @car = Car.find_by(id: params[:id])
-      @cars = Car.where(user_id: user.id)
+      @cars = Car.where(user_id: @user.id)
     end
     
     if @car.in? @cars
@@ -47,14 +45,13 @@ class CarsController < ApplicationController
     message = {}
     if !params[:nosign_id].nil?
       @car = NosignCar.find_by(id: params[:id])
-      @cars = NosignCar.where(nosign_id: cookies[:nosign_id])
+      @cars = NosignCar.where(nosign_id: params[:nosign_id])
     else
       if !user_exist? 
         return 
       end
-      user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
       @car = Car.find_by(id: params[:id])
-      @cars = Car.where(user_id: user.id)
+      @cars = Car.where(user_id: @user.id)
     end
     
     if @car.in? @cars
@@ -75,8 +72,7 @@ class CarsController < ApplicationController
       if !user_exist? 
         return 
       end
-      user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
-      @items = Car.where('user_id',user.id)
+      @items = Car.where('user_id',@user.id)
     end
     render 'index.json.jbuilder'
   end
@@ -84,13 +80,14 @@ class CarsController < ApplicationController
   private
 
   def user_exist?
-    user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
-    if user.nil?
+    @user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
+    if @user.nil?
       message = {}
       message[:code] = 'failure'
       render json: message
       return false
     end
+    return true
   end
 
 end
