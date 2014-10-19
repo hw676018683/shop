@@ -5,7 +5,7 @@ class Admin::ImglistsController < ApplicationController
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
-    @product.details.create(img: params[:img])
+    @product.imglists.create(img: params[:img])
     message[:code] = 'success'
     render json: message
   end
