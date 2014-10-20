@@ -42,7 +42,7 @@ def make_products
   end
   11.times do |n|
     file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-    uploader.store! File.open(File.expand_path(file)
+    uploader.store! File.open(File.expand_path(file))
     name = "车-#{n+21}"
     Product.create!(name: name, category_id: 2, 
                   store_id: 1,
@@ -52,7 +52,7 @@ def make_products
   end
   11.times do |n|
     file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-    uploader.store! File.open(File.expand_path(file)
+    uploader.store! File.open(File.expand_path(file))
     name = "车-#{n+41}"
     Product.create!(name: name, category_id: 3, 
                   store_id: 1,
@@ -62,7 +62,7 @@ def make_products
   end
   3.times do |n|
     file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-    uploader.store! File.open(File.expand_path(file)
+    uploader.store! File.open(File.expand_path(file))
     name = "车-down-#{n}"
     Product.create!(name: name, category_id: 1, 
                   store_id: 1,
