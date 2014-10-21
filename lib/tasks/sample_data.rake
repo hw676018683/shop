@@ -84,7 +84,7 @@ def make_details
       end
     end
     product.skucates.each do |skucate|
-      skucate.create_skulist!(price: product.price,
+      skucate.create_skulist!(price: product.price+rand(100),
                             quantity: 30+skucate.id, oldprice: product.price)
     end
     3.times do |n|
