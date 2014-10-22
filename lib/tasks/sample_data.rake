@@ -13,7 +13,7 @@ end
 def make_stores
   # uploader = AvatarUploader.new
   # file = Dir["public/public/upload/background*.jpg"].first
-  # uploader.store! File.open(File.expand_path(file)) 
+  # uploader.store! File.open(File.expand_path(file))  
   Store.create!(name: '专属', owner_id: 1,
               slogan: '这是一个标语.')
   4.times do |n|
