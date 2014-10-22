@@ -56,6 +56,10 @@ group :development do
 end
 
 gem 'rails_12factor', group: :production
+gem "fog"
+
+gem 'qiniu', '~> 6.2.4'
 
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'carrierwave-qiniu'

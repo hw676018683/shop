@@ -56,6 +56,34 @@ class Admin::ProductsController < ApplicationController
     render json: message
   end
 
+  def update_price
+    message = {}
+    skucate = Skucate.find_by(product_id: params[:id], value1: params[:value1], value2: params[:value2])
+    skucate.skulist.update(price: params[:price])
+    message[:code] = 'success'
+    render json: message
+  end
+
+  def update_quantity
+    message = {}
+    @skucate = Skucate.find_by(product_id: params[:id], value1: params[:value1], value2: params[:value2])
+    @skucate.skulist.update(quantity: params[:quantity])
+    message[:code] = 'success'
+    render json: message
+  end
+
+  def update_detail
+    # message = {}
+    # @detail = Detail.find_by(product_id: params[:id], id: params[:detail_id])
+    # @detail.update()
+    # message[:code] = 'success'
+    # render json: message
+  end
+
+  def update_imglist
+    
+  end
+
   def destroy
     message = {}
     @product = Product.find_by(id: params[:id])

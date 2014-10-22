@@ -1,4 +1,4 @@
-json.cache! [@store] do
+json.cache! @store do
   json.(@store, :id, :name, :slogan)
   json.background image_path @store.background
   json.cache! [:carousels, @store.carousels.collect(&:updated_at).max] do

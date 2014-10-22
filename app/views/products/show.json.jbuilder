@@ -17,7 +17,7 @@ json.cache! [@product] do
   json.cache! [:details, @product.details.collect(&:updated_at).max] do
     json.detail do
       json.array! @product.details do |detail|
-        json.(detail, :text)
+        json.(detail, :id, :text)
         json.img image_path(detail.img)
       end
     end

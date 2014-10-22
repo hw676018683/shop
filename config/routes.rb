@@ -73,6 +73,8 @@ Rails.application.routes.draw do
       member do
         get :drop_product
         get :pick_product
+        post :update_price
+        post :update_quantity
       end
       collection do 
         get :show_down_products

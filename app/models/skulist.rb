@@ -1,4 +1,4 @@
 class Skulist < ActiveRecord::Base
 
-  belongs_to :skucate
+  belongs_to :skucate, touch: true
 end

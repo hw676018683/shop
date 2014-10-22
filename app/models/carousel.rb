@@ -1,3 +1,3 @@
 class Carousel < ActiveRecord::Base
-  belongs_to :store
+  belongs_to :store, touch: true
 end
