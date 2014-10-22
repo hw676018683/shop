@@ -11,12 +11,11 @@ namespace :db do
 end 
 
 def make_stores
-  uploader = AvatarUploader.new
-  file = Dir["public/public/upload/background*.jpg"].first
-  uploader.store! File.open(File.expand_path(file)) 
+  # uploader = AvatarUploader.new
+  # file = Dir["public/public/upload/background*.jpg"].first
+  # uploader.store! File.open(File.expand_path(file)) 
   Store.create!(name: '专属', owner_id: 1,
-              slogan: '这是一个标语.',
-              background: uploader)
+              slogan: '这是一个标语.')
   4.times do |n|
     Carousel.create!(store_id: 1, picture: "s#{n+1}.jpg")
   end
@@ -29,52 +28,38 @@ def make_categories
 end
 
 def make_products
-  uploader = AvatarUploader.new
   11.times do |n|
-    file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-    uploader.store! File.open(File.expand_path(file)) 
     name = "车-#{n+1}"
     pro = Product.create!(name: name, category_id: 1, 
                   store_id: 1,
                   price: (n+1)*10000,
-                  quantity: (n+1)*10,
-                  main_img: uploader)
+                  quantity: (n+1)*10)
   end
   11.times do |n|
-    file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-    uploader.store! File.open(File.expand_path(file))
     name = "车-#{n+21}"
     Product.create!(name: name, category_id: 2, 
                   store_id: 1,
                   price: (n+1)*10000,
-                  quantity: (n+1)*10,
-                  main_img: uploader)
+                  quantity: (n+1)*10)
   end
   11.times do |n|
-    file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-    uploader.store! File.open(File.expand_path(file))
     name = "车-#{n+41}"
     Product.create!(name: name, category_id: 3, 
                   store_id: 1,
                   price: (n+1)*10000,
-                  quantity: (n+1)*10,
-                  main_img: uploader)
+                  quantity: (n+1)*10)
   end
   3.times do |n|
-    file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-    uploader.store! File.open(File.expand_path(file))
     name = "车-down-#{n}"
     Product.create!(name: name, category_id: 1, 
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10,
-                  status: false,
-                  main_img: uploader)
+                  status: false)
   end
 end
 
 def make_details
-  uploader = AvatarUploader.new
   @products = Product.all
   @products.each do |product|
     3.times do |n|
@@ -90,16 +75,16 @@ def make_details
     3.times do |n|
       product.properties.create!(name: "属性-#{n+1}", value: "属性值-#{n+1}")
     end
-    3.times do |n|
-      file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-      uploader.store! File.open(File.expand_path(file)) 
-      product.imglists.create!(img: uploader)
-    end
-    1.times do |n|
-      file = Dir["public/public/upload/s#{n+4}*.jpg"].first
-      uploader.store! File.open(File.expand_path(file)) 
-      product.details.create!(img: uploader, text:"这是一个介绍")
-    end
+    # 3.times do |n|
+    #   file = Dir["public/public/upload/s#{n+1}*.jpg"].first
+    #   uploader.store! File.open(File.expand_path(file)) 
+    #   product.imglists.create!(img: uploader)
+    # end
+    # 1.times do |n|
+    #   file = Dir["public/public/upload/s#{n+4}*.jpg"].first
+    #   uploader.store! File.open(File.expand_path(file)) 
+    #   product.details.create!(img: uploader, text:"这是一个介绍")
+    # end
   end
 
   def make_owner
