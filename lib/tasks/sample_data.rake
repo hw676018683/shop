@@ -11,11 +11,11 @@ namespace :db do
 end 
 
 def make_stores
-  # uploader = AvatarUploader.new
-  # file = Dir["public/public/upload/background*.jpg"].first
-  # uploader.store! File.open(File.expand_path(file))  
-  Store.create!(name: '专属', owner_id: 1,
+  file = Dir["public/public/upload/background*.jpg"].first 
+  store = Store.new(name: '专属', owner_id: 1,
               slogan: '这是一个标语.')
+  store.background.store! File.open(File.expand_path(file))
+  store.save 
   4.times do |n|
     Carousel.create!(store_id: 1, picture: "s#{n+1}.jpg")
   end
@@ -29,11 +29,14 @@ end
 
 def make_products
   11.times do |n|
+    file = Dir["public/public/upload/s#{n+1}*.jpg"].first
     name = "车-#{n+1}"
-    pro = Product.create!(name: name, category_id: 1, 
+    pro = Product.new(name: name, category_id: 1, 
                   store_id: 1,
                   price: (n+1)*10000,
                   quantity: (n+1)*10)
+    pro.main_img.store! File.open(File.expand_path(file))
+    pro.save
   end
   11.times do |n|
     name = "车-#{n+21}"
@@ -75,31 +78,35 @@ def make_details
     3.times do |n|
       product.properties.create!(name: "属性-#{n+1}", value: "属性值-#{n+1}")
     end
-    # 3.times do |n|
-    #   file = Dir["public/public/upload/s#{n+1}*.jpg"].first
-    #   uploader.store! File.open(File.expand_path(file)) 
-    #   product.imglists.create!(img: uploader)
-    # end
-    # 1.times do |n|
-    #   file = Dir["public/public/upload/s#{n+4}*.jpg"].first
-    #   uploader.store! File.open(File.expand_path(file)) 
-    #   product.details.create!(img: uploader, text:"这是一个介绍")
-    # end
   end
 
-  def make_owner
-    Admin::Owner.create(email: '110@qq.com', password: '123456')
+  2.times do |n|
+    file = Dir["public/public/upload/s#{n+5}*.jpg"].first
+    detail = Detail.new(product_id: 1, text: "这是介绍-#{n+1}")
+    detail.img.store! File.open(File.expand_path(file))
+    detail.save
   end
-
-  def make_user
-    User.create!(name: 'Love Tristana', email: '111@qq.com', password: 'asd110', phone: '1234567890')
+  3.times do |n|
+    file = Dir["public/public/upload/s#{n+2}*.jpg"].first
+    imglist = Imglist.new(product_id: 1)
+    imglist.img.store! File.open(File.expand_path(file)) 
+    imglist.save
   end
-
-  def make_comments
-    10.times do |n|
-      Comment.create!(user_id: 1, product_id: n+1, content: '沙发沙发沙发')
-    end
-  end
-
 end
+
+def make_owner
+  Admin::Owner.create(email: '110@qq.com', password: '123456')
+end
+
+def make_user
+  User.create!(name: 'Love Tristana', email: '111@qq.com', password: 'asd110', phone: '1234567890')
+end
+
+def make_comments
+  10.times do |n|
+    Comment.create!(user_id: 1, product_id: n+1, content: '沙发沙发沙发')
+  end
+end
+
+
 
