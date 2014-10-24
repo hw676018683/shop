@@ -37,15 +37,15 @@ def make_pictures
   end
   4.times do |n|
     file = Dir["public/public/upload/s#{n+2}*.jpg"].first
-    imglist = Imglist.new(product_id: 1)
-    imglist.img.store! File.open(File.expand_path(file)) 
-    imglist.save
+    @imglist = Imglist.find_by(id: n+1)
+    @imglist.img.store! File.open(File.expand_path(file)) 
+    @imglist.save
   end
   2.times do |n|
     file = Dir["public/public/upload/s#{n+5}*.jpg"].first
-    detail = Detail.new(product_id: 1, text: "这是介绍-#{n+1}")
-    detail.img.store! File.open(File.expand_path(file))
-    detail.save
+    @detail = Detail.find_by(id: n+1)
+    @detail.img.store! File.open(File.expand_path(file))
+    @detail.save
   end
 end
 

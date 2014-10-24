@@ -55,6 +55,9 @@
     skucate.create_skulist!(price: @product.price+rand(100),
                             quantity: 30+skucate.id, oldprice: @product.price)
   end
+  4.times do |n|
+    @product.imglists.create!()
+  end
   3.times do |n|
     @product.properties.create!(name: "属性-#{n+1}", value: "属性值-#{n+1}")
   end
