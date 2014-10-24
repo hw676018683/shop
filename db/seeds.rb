@@ -11,10 +11,10 @@
   Category.create!(name: "法拉利", store_id: 1)
   Category.create!(name: "奥迪", store_id: 1)
 
-  Carousel.create!(store_id: 1, picture: 's8.jpg')
-  Carousel.create!(store_id: 1, picture: 's7.jpg')
-  Carousel.create!(store_id: 1, picture: 's6.jpg')
-  Carousel.create!(store_id: 1, picture: 's5.jpg')
+  Carousel.create!(store_id: 1, picture: 's1.jpg')
+  Carousel.create!(store_id: 1, picture: 's2.jpg')
+  Carousel.create!(store_id: 1, picture: 's3.jpg')
+  Carousel.create!(store_id: 1, picture: 's4.jpg')
   11.times do |n|
     name = "车-#{n+1}"
     Product.create!(name: name, category_id: 1, 
