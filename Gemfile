@@ -56,7 +56,7 @@ group :development do
 end
 
 gem 'rails_12factor', group: :production
-gem "fog"
+# gem "fog"
 
 gem 'qiniu', '~> 6.2.4'
 

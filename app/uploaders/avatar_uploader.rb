@@ -7,8 +7,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  # storage :file
-  storage :qiniu
+  storage :file
+  # storage :qiniu
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
@@ -46,12 +46,12 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  def filename
-    random_token = Digest::SHA2.hexdigest("#{Time.now.utc}--#{rand(999999)}").first(20)
-    ivar = "@#{mounted_as}_secure_token"    
-    token = model.instance_variable_get(ivar)
-    token ||= model.instance_variable_set(ivar, random_token)
-    "#{token}.jpg" if original_filename
-  end
+  # def filename
+  #   random_token = Digest::SHA2.hexdigest("#{Time.now.utc}--#{rand(999999)}").first(20)
+  #   ivar = "@#{mounted_as}_secure_token"    
+  #   token = model.instance_variable_get(ivar)
+  #   token ||= model.instance_variable_set(ivar, random_token)
+  #   "#{token}.jpg" if original_filename
+  # end
 
 end
