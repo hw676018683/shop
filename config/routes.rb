@@ -69,22 +69,22 @@ Rails.application.routes.draw do
     end
   end
   namespace :admin do
-    resources :products, only: [:create, :destroy] do 
+    resources :products, only: [:create, :destroy, :update] do 
       member do
         get :drop_product
         get :pick_product
-        post :update_price
-        post :update_quantity
       end
       collection do 
         get :show_down_products
         get :show_up_products
       end
     end
-    resources :imglists, only: [:create]
-    resources :details, only: [:create]
+    resources :properties, only: [:create, :update, :destroy]
+    resources :skucates, only: [:create, :update, :destroy]
+    resources :imglists, only: [:create, :update, :destroy]
+    resources :details, only: [:create, :update, :destroy]
     resources :categories, only: [:create, :index, :update]
-    resources :details , only: :create
+    resources :details , only: [:create, :update, :destroy]
     resources :stores, only: :update
   end
   resources :categories
