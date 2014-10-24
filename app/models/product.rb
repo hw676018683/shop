@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
-  belongs_to :store
-  belongs_to :category
+  belongs_to :store, touch: true
+  belongs_to :category, touch: true
 
   has_many :details, dependent: :destroy
   has_many :skucates, dependent: :destroy

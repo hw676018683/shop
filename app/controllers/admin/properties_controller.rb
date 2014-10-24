@@ -1,12 +1,12 @@
-class Admin::DetailsController < ApplicationController
+class Admin::PropertiesController < ApplicationController
 
   before_action :owner_exist?
 
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
-    @detai = @product.details.build(detail_params)
-    if @detail.save
+    @property = @product.properties.build(property_params)
+    if @property.save
       message[:code] = 'success'
     else
       message[:code] = 'failure'
@@ -16,8 +16,8 @@ class Admin::DetailsController < ApplicationController
 
   def update
     message = {}
-    @detail = Detail.find_by(id: params[:id])
-    if @detail.update(detail_params)
+    @property = Property.find(id: params[:id])
+    if @property.update(property_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'
@@ -27,7 +27,7 @@ class Admin::DetailsController < ApplicationController
 
   def destroy
     message = {}
-    Detail.find_by(id: params[:id]).destroy
+    Property.find(id: params[:id]).destroy
     message[:code] = 'success'
     render json: message
   end
@@ -43,7 +43,8 @@ class Admin::DetailsController < ApplicationController
     end
   end
 
-  def detail_params
-    params.permit(:img, :text)
+  def property_params
+    params.permit(:name, :value)
   end
+
 end

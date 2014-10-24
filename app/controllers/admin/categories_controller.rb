@@ -4,9 +4,13 @@ class Admin::CategoriesController < ApplicationController
 
   def create
     message = {}
-    @category = @owner.store.categories.create!(name: params[:name])
-    message[:code] = 'success'
-    message[:category_id] = @category.id
+    @category = @owner.store.categories.build(category_params)
+    if @category.save
+      message[:code] = 'success'
+      message[:category_id] = @category.id
+    else
+      message[:code] = 'failure'
+    end
     render json: message
   end
 
@@ -18,12 +22,10 @@ class Admin::CategoriesController < ApplicationController
   def update
     message = {}
     @category = Category.find_by(id: params[:id])
-    if @owner.store.categories.include? @category
-      @category.update_attribute('name', params[:name])
+    if @category.update(category_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'
-      message[:errors] = 'No permission to delete'
     end
     render json: message
   end
@@ -42,4 +44,9 @@ class Admin::CategoriesController < ApplicationController
   def test
     @owner = Admin::Owner.first
   end
+
+  def category_params
+    params.permit(:name)
+  end
+
 end

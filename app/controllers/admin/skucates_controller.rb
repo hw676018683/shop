@@ -1,12 +1,13 @@
-class Admin::DetailsController < ApplicationController
+class Admin::SkucatesController < ApplicationController
 
   before_action :owner_exist?
 
   def create
     message = {}
-    @product = Product.find_by(id: params[:product_id])
-    @detai = @product.details.build(detail_params)
-    if @detail.save
+    @product = product.find_by(id: params[:product_id])
+    @skucate = @product.skucates.build(skucate_params)
+    if @skucate.save
+      @skucate.skulist.create!(skulist_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'
@@ -16,8 +17,8 @@ class Admin::DetailsController < ApplicationController
 
   def update
     message = {}
-    @detail = Detail.find_by(id: params[:id])
-    if @detail.update(detail_params)
+    @skucate = Skucate.find_by(skucate_params)
+    if @skucate.skulist.update(skulist_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'
@@ -27,9 +28,9 @@ class Admin::DetailsController < ApplicationController
 
   def destroy
     message = {}
-    Detail.find_by(id: params[:id]).destroy
+    Skucate.find_by(skucate_params).destroy
     message[:code] = 'success'
-    render json: message
+    render json: message 
   end
 
   private
@@ -43,7 +44,12 @@ class Admin::DetailsController < ApplicationController
     end
   end
 
-  def detail_params
-    params.permit(:img, :text)
+  def skucate_params
+    params.permit(:value1, :name1, :name2, :value2)
   end
+
+  def skulist_params
+    params.permit(:price, :quantity)
+  end
+
 end

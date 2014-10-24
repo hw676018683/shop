@@ -5,7 +5,29 @@ class Admin::ImglistsController < ApplicationController
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
-    @product.imglists.create(img: params[:img])
+    @imglist = @product.imglists.build(imglist_params)
+    if @imglist.save
+      message[:code] = 'success'
+    else
+      message[:code] = 'failure'
+    end
+    render json: message
+  end
+
+  def update
+    message = {}
+    @imglist = Imglist.find_by(id: params[:id])
+    if @imglist.update(imglist_params)
+      message[:code] = 'success'
+    else
+      message[:code] = 'failure'
+    end
+    render json: message
+  end
+
+  def destroy
+    message = {}
+    Imglist.find_by(id: params[:id]).destroy
     message[:code] = 'success'
     render json: message
   end
@@ -23,5 +45,9 @@ class Admin::ImglistsController < ApplicationController
 
   def test
     @owner = Admin::Owner.first
+  end
+
+  def imglist_params
+    params.permit(:img)
   end
 end

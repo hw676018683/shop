@@ -4,12 +4,10 @@ class Admin::StoresController < ApplicationController
   def update
     message = {}
     @store = Store.find_by(id: params[:id])
-    if @store == @owner.store
-      @store.update(name: params[:name], background: params[:background], slogan: params[:slogan])
+    if @store.update(store_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'
-      message[:errors] = 'No permission to update'
     end
     render json: message
   end
@@ -23,5 +21,9 @@ class Admin::StoresController < ApplicationController
       message[:code] = 'failure'
       render json: message
     end
+  end
+
+  def store_params
+    params.permit(:name, :background, :slogan)
   end
 end

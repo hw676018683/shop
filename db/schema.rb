@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016081025) do
+ActiveRecord::Schema.define(version: 20141023070127) do
 
   create_table "admin_owners", force: true do |t|
     t.string   "email"
@@ -83,9 +83,9 @@ ActiveRecord::Schema.define(version: 20141016081025) do
   create_table "imglists", force: true do |t|
     t.integer  "product_id"
     t.string   "img"
-    t.boolean  "main_img",   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "order"
   end
 
   create_table "nosign_cars", force: true do |t|

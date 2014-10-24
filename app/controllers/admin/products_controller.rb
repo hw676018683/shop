@@ -15,7 +15,7 @@ class Admin::ProductsController < ApplicationController
     quantity = []
     flag1 = true
     flag2 = true
-    @product = Product.new(name: params[:name], category_id: params[:category_id], store_id: @owner.store.id, main_img: params[:picture])
+    @product = @owner.store.products.build(product_params)
     properties = JSON.parse(params[:property])
     properties.each do |property|
       if Property.new(property).invalid?
@@ -56,44 +56,21 @@ class Admin::ProductsController < ApplicationController
     render json: message
   end
 
-  def update_price
+  def update
     message = {}
-    skucate = Skucate.find_by(product_id: params[:id], value1: params[:value1], value2: params[:value2])
-    skucate.skulist.update(price: params[:price])
-    message[:code] = 'success'
+    @product = Product.find(id: params[:id])
+    if @product.update(product_params)
+      message[:code] = 'success'
+    else
+      message[:code] = 'failure'
+    end
     render json: message
-  end
-
-  def update_quantity
-    message = {}
-    @skucate = Skucate.find_by(product_id: params[:id], value1: params[:value1], value2: params[:value2])
-    @skucate.skulist.update(quantity: params[:quantity])
-    message[:code] = 'success'
-    render json: message
-  end
-
-  def update_detail
-    # message = {}
-    # @detail = Detail.find_by(product_id: params[:id], id: params[:detail_id])
-    # @detail.update()
-    # message[:code] = 'success'
-    # render json: message
-  end
-
-  def update_imglist
-    
   end
 
   def destroy
     message = {}
-    @product = Product.find_by(id: params[:id])
-    if @owner.store.products.where(status: false).include? @product
-      @product.destroy
-      message[:code] = 'success'
-    else
-      message[:code] = 'failure'
-      message[:errors] = 'No permission to delete or has been deleted'
-    end
+    Product.find_by(id: params[:id]).destroy
+    message[:code] = 'success'
     render json: message
   end
 
@@ -152,6 +129,10 @@ class Admin::ProductsController < ApplicationController
 
   def test
     @owner = Admin::Owner.first
+  end
+
+  def product_params
+    params.permit(:name, :category_id, :main_img)
   end
 
 end
