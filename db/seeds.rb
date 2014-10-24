@@ -14,7 +14,7 @@
   Carousel.create!(store_id: 1, picture: 's8.jpg')
   Carousel.create!(store_id: 1, picture: 's7.jpg')
   Carousel.create!(store_id: 1, picture: 's6.jpg')
-  Carousel.create!(store_id: 1, picture: 'hs5.jpg')
+  Carousel.create!(store_id: 1, picture: 's5.jpg')
   11.times do |n|
     name = "车-#{n+1}"
     Product.create!(name: name, category_id: 1, 
