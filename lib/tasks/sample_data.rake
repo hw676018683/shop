@@ -1,8 +1,21 @@
 namespace :db do
   desc "Fill database with sample data"
-  task populate: :environment do
+  task populate1: :environment do
     make_pictures
   end 
+
+  task populate2: :environment do
+    make_products1
+  end 
+
+  task populate3: :environment do
+    make_products2
+  end 
+
+  task populate4: :environment do
+    make_details
+  end 
+
 end 
 
 def make_pictures
@@ -10,13 +23,18 @@ def make_pictures
   @store = Store.find_by(id: 1)
   @store.background.store! File.open(File.expand_path(file))
   @store.save
+end
 
+def make_products1
   11.times do |n|
     file = Dir["public/public/upload/s#{n+1}*.jpg"].first
     @product = Product.find_by(id: n+1)
     @product.main_img.store! File.open(File.expand_path(file))
     @product.save
   end
+end
+
+def make_products2
   2.times do |n|
     file = Dir["public/public/upload/s#{n+4}*.jpg"].first
     @product = Product.find_by(id: n+12)
@@ -35,6 +53,9 @@ def make_pictures
     @product.main_img.store! File.open(File.expand_path(file))
     @product.save
   end
+end
+
+def make_details
   4.times do |n|
     file = Dir["public/public/upload/s#{n+2}*.jpg"].first
     @imglist = Imglist.find_by(id: n+1)
@@ -47,6 +68,7 @@ def make_pictures
     @detail.img.store! File.open(File.expand_path(file))
     @detail.save
   end
+  
 end
 
 # def make_categories
