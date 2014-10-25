@@ -1,4 +1,5 @@
 class Admin::StoresController < ApplicationController
+
   before_action :owner_exist?
 
   def update
@@ -8,22 +9,15 @@ class Admin::StoresController < ApplicationController
       message[:code] = 'success'
     else
       message[:code] = 'failure'
+      message[:error] = @store.errors
     end
     render json: message
   end
 
   private
 
-  def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: Admin::Owner.encrypt(params[:remember_token]))
-    if @owner.nil?
-      message = {}
-      message[:code] = 'failure'
-      render json: message
-    end
-  end
-
   def store_params
     params.permit(:name, :background, :slogan)
   end
+
 end

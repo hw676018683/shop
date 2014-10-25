@@ -5,7 +5,7 @@ class CarsController < ApplicationController
     message = {}
     skucate = Skucate.find_by(product_id: params[:product_id], value1: params[:value1], value2: params[:value2])
     if params[:nosign_id].nil?
-      if !user_exist? 
+      if !user_exist! 
         return 
       end
       @user.cars.create!(skucate_id: skucate.id, quantity: params[:quantity])
@@ -23,7 +23,7 @@ class CarsController < ApplicationController
       @car = NosignCar.find_by(id: params[:id])
       @cars = NosignCar.where(nosign_id: params[:nosign_id])
     else
-      if !user_exist? 
+      if !user_exist! 
         return 
       end
       @car = Car.find_by(id: params[:id])
@@ -47,7 +47,7 @@ class CarsController < ApplicationController
       @car = NosignCar.find_by(id: params[:id])
       @cars = NosignCar.where(nosign_id: params[:nosign_id])
     else
-      if !user_exist? 
+      if !user_exist! 
         return 
       end
       @car = Car.find_by(id: params[:id])
@@ -69,7 +69,7 @@ class CarsController < ApplicationController
     if !params[:nosign_id].nil?
       @items = NosignCar.where(nosign_id: params[:nosign_id])
     else
-      if !user_exist? 
+      if !user_exist! 
         return 
       end
       @items = Car.where('user_id',@user.id)
@@ -79,7 +79,7 @@ class CarsController < ApplicationController
 
   private
 
-  def user_exist?
+  def user_exist!
     @user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
     if @user.nil?
       message = {}

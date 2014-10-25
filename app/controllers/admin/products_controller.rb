@@ -1,10 +1,6 @@
 class Admin::ProductsController < ApplicationController
-  # before_action :test
-  before_action :owner_exist?
 
-  def show
-    
-  end
+  before_action :owner_exist?
 
   def create 
     message = {}
@@ -63,6 +59,7 @@ class Admin::ProductsController < ApplicationController
       message[:code] = 'success'
     else
       message[:code] = 'failure'
+      message[:error] = @product.errors
     end
     render json: message
   end
@@ -115,21 +112,8 @@ class Admin::ProductsController < ApplicationController
     render 'show.json.jbuilder'
   end
 
-
   private
 
-  def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: Admin::Owner.encrypt(params[:remember_token]))
-    if @owner.nil?
-      message = {}
-      message[:code] = 'failure'
-      render json: message
-    end
-  end
-
-  def test
-    @owner = Admin::Owner.first
-  end
 
   def product_params
     params.permit(:name, :category_id, :main_img)

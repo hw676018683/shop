@@ -20,15 +20,4 @@ class CommentsController < ApplicationController
     render 'index.json.jbuilder'
   end
 
-  private
-
-  def user_exist?
-    @user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
-    if @user.nil?
-      message = {}
-      message[:code] = 'failure'
-      render json: message
-    end
-  end
-
 end

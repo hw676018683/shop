@@ -3,7 +3,6 @@ class Admin::OwnersController < ApplicationController
   def signin
     message = {}
     owner = Admin::Owner.find_by(email: params[:email].downcase)
-    p owner
     if owner && owner.authenticate(params[:password])
       remember_token = Admin::Owner.new_remember_token
       owner.update_attribute('remember_token', Admin::Owner.encrypt(remember_token))

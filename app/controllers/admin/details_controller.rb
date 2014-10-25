@@ -5,11 +5,13 @@ class Admin::DetailsController < ApplicationController
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
-    @detai = @product.details.build(detail_params)
+    @detail = @product.details.build(detail_params)
     if @detail.save
       message[:code] = 'success'
+      message[:detail_id] = @detail.id
     else
       message[:code] = 'failure'
+      message[:error] = @detail.errors
     end
     render json: message
   end
@@ -21,6 +23,7 @@ class Admin::DetailsController < ApplicationController
       message[:code] = 'success'
     else
       message[:code] = 'failure'
+      message[:error] = @detail.errors
     end
     render json: message
   end
@@ -33,15 +36,6 @@ class Admin::DetailsController < ApplicationController
   end
 
   private
-
-  def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: Admin::Owner.encrypt(params[:remember_token]))
-    if @owner.nil?
-      message = {}
-      message[:code] = 'failure'
-      render json: message
-    end
-  end
 
   def detail_params
     params.permit(:img, :text)

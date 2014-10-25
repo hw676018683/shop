@@ -4,45 +4,48 @@ class Admin::SkucatesController < ApplicationController
 
   def create
     message = {}
-    @product = product.find_by(id: params[:product_id])
+    @product = Product.find_by(id: params[:product_id])
     @skucate = @product.skucates.build(skucate_params)
     if @skucate.save
-      @skucate.skulist.create!(skulist_params)
+      @skucate.create_skulist!(skulist_params)
       message[:code] = 'success'
+      message[:skucate_id] = @skucate.id
     else
       message[:code] = 'failure'
+      message[:error] = @skucate.errors
     end
     render json: message
   end
 
   def update
     message = {}
-    @skucate = Skucate.find_by(skucate_params)
-    if @skucate.skulist.update(skulist_params)
-      message[:code] = 'success'
+    @skucate = Skucate.find_by(id: params[:id])
+    if @skucate.skulist.price <= params[:price].to_i 
+      if @skucate.skulist.update(skulist_params)
+        message[:code] = 'success'
+      else
+        message[:code] = 'failure'
+        message[:error] = @skucate.errors
+      end
     else
-      message[:code] = 'failure'
+      oldprice = @skucate.skulist.price
+       if @skucate.skulist.update(price: params[:price], quantity: params[:quantity], oldprice: oldprice)
+        message[:code] = 'success'
+      else
+        message[:code] = 'failure'
+      end
     end
     render json: message
   end
 
   def destroy
     message = {}
-    Skucate.find_by(skucate_params).destroy
+    Skucate.find_by(id: params[:id]).destroy
     message[:code] = 'success'
     render json: message 
   end
 
   private
-
-  def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: Admin::Owner.encrypt(params[:remember_token]))
-    if @owner.nil?
-      message = {}
-      message[:code] = 'failure'
-      render json: message
-    end
-  end
 
   def skucate_params
     params.permit(:value1, :name1, :name2, :value2)

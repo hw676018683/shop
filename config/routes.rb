@@ -78,13 +78,17 @@ Rails.application.routes.draw do
         get :show_down_products
         get :show_up_products
       end
+      resources :properties, only: [:create, :update, :destroy]
+      resources :skucates, only: [:create, :update, :destroy]
+      resources :imglists, only: [:create, :update, :destroy] do
+        collection do 
+          put :update_order
+        end
+      end
+      resources :details, only: [:create, :update, :destroy]
+      resources :details , only: [:create, :update, :destroy]
     end
-    resources :properties, only: [:create, :update, :destroy]
-    resources :skucates, only: [:create, :update, :destroy]
-    resources :imglists, only: [:create, :update, :destroy]
-    resources :details, only: [:create, :update, :destroy]
     resources :categories, only: [:create, :index, :update]
-    resources :details , only: [:create, :update, :destroy]
     resources :stores, only: :update
   end
   resources :categories

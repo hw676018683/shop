@@ -1,5 +1,5 @@
 class Admin::CategoriesController < ApplicationController
-  # before_action :test
+
   before_action :owner_exist?
 
   def create
@@ -10,6 +10,7 @@ class Admin::CategoriesController < ApplicationController
       message[:category_id] = @category.id
     else
       message[:code] = 'failure'
+      message[:error] = @category.errors
     end
     render json: message
   end
@@ -26,24 +27,13 @@ class Admin::CategoriesController < ApplicationController
       message[:code] = 'success'
     else
       message[:code] = 'failure'
+      message[:error] = @category.errors
     end
     render json: message
   end
 
   private
 
-  def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: Admin::Owner.encrypt(params[:remember_token]))
-    if @owner.nil?
-      message = {}
-      message[:code] = 'failure'
-      render json: message
-    end
-  end
-
-  def test
-    @owner = Admin::Owner.first
-  end
 
   def category_params
     params.permit(:name)

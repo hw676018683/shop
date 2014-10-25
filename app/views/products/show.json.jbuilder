@@ -2,7 +2,8 @@ json.cache! [@product] do
   json.(@product, :id, :name, :category_id, :main_img)
   json.cache! [:imglists, @product.imglists.collect(&:updated_at).max] do
     json.imglist do
-      json.array! @product.imglists do |img|
+      json.array! @product.imglists.order(:order) do |img|
+        json.id img.id
         json.img image_path(img.img)
       end
     end
@@ -10,7 +11,7 @@ json.cache! [@product] do
   json.cache! [:properties, @product.properties.collect(&:updated_at).max] do
     json.property do
       json.array! @product.properties do |property|
-        json.(property, :name, :value)
+        json.(property, :id, :name, :value)
       end
     end
   end
@@ -25,7 +26,7 @@ json.cache! [@product] do
   json.cache! [:skucates, @product.skucates.collect(&:updated_at).max] do
     json.skucate do
       json.array! @product.skucates do |skucate|
-        json.(skucate, :name1, :value1, :name2, :value2)
+        json.(skucate, :id, :name1, :value1, :name2, :value2)
         json.(skucate.skulist, :price, :oldprice, :quantity)
       end
     end

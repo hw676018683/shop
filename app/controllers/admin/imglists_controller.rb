@@ -1,15 +1,18 @@
 class Admin::ImglistsController < ApplicationController
-  # before_action :test
+  
   before_action :owner_exist?
 
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
-    @imglist = @product.imglists.build(imglist_params)
+    last_order = @product.imglists.collect(&:order).max || 0
+    @imglist = @product.imglists.build(img: params[:img], order: last_order+1)
     if @imglist.save
       message[:code] = 'success'
+      message[:imglist_id] = @imglist.id
     else
       message[:code] = 'failure'
+      message[:error] = @imglist.errors
     end
     render json: message
   end
@@ -17,11 +20,22 @@ class Admin::ImglistsController < ApplicationController
   def update
     message = {}
     @imglist = Imglist.find_by(id: params[:id])
-    if @imglist.update(imglist_params)
+    if @imglist.update(img: params[:img])
       message[:code] = 'success'
     else
       message[:code] = 'failure'
+      message[:error] = @imglist.errors
     end
+    render json: message
+  end
+
+  def update_order
+    message = {}
+    order = params[:order].split(',')
+    order.each_index do |x|
+      Imglist.find_by(id: order[x]).update(order: x+1)
+    end
+    message[:code] = 'success'
     render json: message
   end
 
@@ -34,20 +48,8 @@ class Admin::ImglistsController < ApplicationController
 
   private
 
-  def owner_exist?
-    @owner = Admin::Owner.find_by(remember_token: Admin::Owner.encrypt(params[:remember_token]))
-    if @owner.nil?
-      message = {}
-      message[:code] = 'failure'
-      render json: message
-    end
-  end
-
   def test
     @owner = Admin::Owner.first
   end
 
-  def imglist_params
-    params.permit(:img)
-  end
 end

@@ -114,16 +114,6 @@ class UsersController < ApplicationController
                                  :province, :city, :address, :phone, :name)
   end
 
-  def user_exist?
-    @user = User.find_by(remember_token: User.encrypt(params[:remember_token]), id: params[:id])
-    p @user
-    if @user.nil?
-      message = {}
-      message[:code] = 'failure'
-      render json: message
-    end
-  end
-
   def product_exist?
     message = {}
     if !Product.find_by(id: params[:product_id])
