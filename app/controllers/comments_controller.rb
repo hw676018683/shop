@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 
-  before_action :user_exist?, only: :create
+  before_action :user_exist?, only: [:create, :destroy]
 
   def create
     message ={}

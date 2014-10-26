@@ -2,8 +2,7 @@ module SessionsHelper
 
 
   def user_exist?
-    @user = User.find_by(remember_token: User.encrypt(params[:remember_token]), id: params[:id])
-    p @user
+    @user = User.find_by(remember_token: User.encrypt(params[:remember_token]))
     if @user.nil?
       message = {}
       message[:code] = 'failure'

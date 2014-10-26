@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   # before_action :test
-  before_action :user_exist?, except: [:create, :nosign_id]
+  before_action :user_exist1?, except: [:create, :nosign_id]
   before_action :product_exist?, only: [:follow, :unfollow]
   before_action :store_exist?, only: [:collect, :uncollect]
 
@@ -141,6 +141,15 @@ class UsersController < ApplicationController
     if !Store.find_by(id: params[:store_id])
       message[:code] = 'failure'
       message[:message] = "couldn't find Store with 'id'=#{params[:store_id]}"
+      render json: message
+    end
+  end
+
+  def user_exist1?
+    @user = User.find_by(remember_token: User.encrypt(params[:remember_token]), id: params[:id])
+    if @user.nil?
+      message = {}
+      message[:code] = 'failure'
       render json: message
     end
   end
