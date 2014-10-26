@@ -72,7 +72,7 @@ class CarsController < ApplicationController
       if !user_exist! 
         return 
       end
-      @items = Car.where('user_id',@user.id)
+      @items = Car.where(user_id: @user.id)
     end
     render 'index.json.jbuilder'
   end

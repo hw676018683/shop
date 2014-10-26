@@ -56,7 +56,7 @@ Rails.application.routes.draw do
   root 'stores#index'
 
   resources :products do 
-    resources :comments, only: [:index, :create]
+    resources :comments, only: [:index, :create, :destroy]
   end
   resources :users do
     member do
@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     end
   end
   namespace :admin do
+    resources :replies, only: [:create, :destroy]
     resources :products, only: [:create, :destroy, :update] do 
       member do
         get :drop_product

@@ -52,7 +52,7 @@
     end
   end
   @product.skucates.each do |skucate|
-    skucate.create_skulist!(price: @product.price+rand(100),
+    skucate.create_skulist!(price: @product.price-rand(100),
                             quantity: 30+skucate.id, oldprice: @product.price)
   end
   4.times do |n|
@@ -70,3 +70,4 @@
   11.times do |n|
     Comment.create!(user_id: 1, product_id: 1, content: "这是一个评论#{n+1}")
   end
+  Comment.find(11).replies.create!(owner_id: 1, content: '这是一个店家回复')

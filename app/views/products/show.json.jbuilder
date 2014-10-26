@@ -1,5 +1,6 @@
 json.cache! [@product] do
-  json.(@product, :id, :name, :category_id, :main_img)
+  json.(@product, :id, :name, :category_id)
+  json.main_img image_path @product.main_img_url
   json.cache! [:imglists, @product.imglists.collect(&:updated_at).max] do
     json.imglist do
       json.array! @product.imglists.order(:order) do |img|

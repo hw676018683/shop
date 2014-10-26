@@ -101,6 +101,19 @@ class UsersController < ApplicationController
     render 'following.json.jbuilder'
   end
 
+  def reply
+    message = {}
+    @comment = Comment.new(user_id: @user.id, reply_id: params[:reply_id], content: params[:content])
+    if @comment.save
+      message[:code] = 'success'
+      message[:comment_id] = @comment.id
+    else
+      message[:code] = 'failure'
+      message[:error] = @comment.errors
+    end
+    render json: message
+  end
+
 
 
   private
