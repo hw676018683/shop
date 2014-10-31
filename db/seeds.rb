@@ -71,3 +71,8 @@
     Comment.create!(user_id: 1, product_id: 1, content: "这是一个评论#{n+1}")
   end
   Comment.find(11).replies.create!(owner_id: 1, content: '这是一个店家回复')
+  2.times do |n|
+    Message.create(user_id: 1, code: n+2, product_id:1)
+  end
+  Message.create(user_id: 1, code: 1, store_id: 1, product_id: 1)
+  Message.create(user_id: 1, code: 2, product_id: 1, status: true)

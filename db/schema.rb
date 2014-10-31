@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141025070220) do
+ActiveRecord::Schema.define(version: 20141031075509) do
 
   create_table "admin_owners", force: true do |t|
     t.string   "email"
@@ -22,12 +22,17 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.datetime "updated_at"
   end
 
+  add_index "admin_owners", ["email"], name: "index_admin_owners_on_email", unique: true
+  add_index "admin_owners", ["remember_token"], name: "index_admin_owners_on_remember_token"
+
   create_table "carousels", force: true do |t|
     t.integer  "store_id"
     t.string   "picture"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "carousels", ["store_id"], name: "index_carousels_on_store_id"
 
   create_table "cars", force: true do |t|
     t.integer  "user_id"
@@ -37,12 +42,16 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.datetime "updated_at"
   end
 
+  add_index "cars", ["user_id"], name: "index_cars_on_user_id"
+
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "store_id"
   end
+
+  add_index "categories", ["store_id"], name: "index_categories_on_store_id"
 
   create_table "collecting_relationships", force: true do |t|
     t.integer  "store_id"
@@ -52,6 +61,7 @@ ActiveRecord::Schema.define(version: 20141025070220) do
   end
 
   add_index "collecting_relationships", ["store_id", "user_id"], name: "index_collecting_relationships_on_store_id_and_user_id", unique: true
+  add_index "collecting_relationships", ["user_id"], name: "index_collecting_relationships_on_user_id"
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -62,6 +72,10 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.integer  "reply_id"
   end
 
+  add_index "comments", ["product_id"], name: "index_comments_on_product_id"
+  add_index "comments", ["reply_id"], name: "index_comments_on_reply_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
   create_table "details", force: true do |t|
     t.integer  "product_id"
     t.string   "img"
@@ -69,6 +83,8 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.datetime "updated_at"
     t.text     "text"
   end
+
+  add_index "details", ["product_id"], name: "index_details_on_product_id"
 
   create_table "following_relationships", force: true do |t|
     t.integer  "follower_id"
@@ -89,6 +105,22 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.integer  "order"
   end
 
+  add_index "imglists", ["product_id"], name: "index_imglists_on_product_id"
+
+  create_table "messages", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "store_id"
+    t.integer  "product_id"
+    t.integer  "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "owner_id"
+    t.boolean  "status",     default: false
+    t.integer  "reply_id"
+  end
+
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id"
+
   create_table "nosign_cars", force: true do |t|
     t.integer  "skucate_id"
     t.integer  "quantity"
@@ -96,6 +128,8 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.datetime "updated_at"
     t.string   "nosign_id"
   end
+
+  add_index "nosign_cars", ["nosign_id"], name: "index_nosign_cars_on_nosign_id"
 
   create_table "products", force: true do |t|
     t.string   "name"
@@ -105,11 +139,12 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "store_id"
-    t.float    "price"
     t.integer  "quantity"
-    t.boolean  "status",      default: true
+    t.boolean  "status",                               default: true
+    t.decimal  "price",       precision: 10, scale: 2
   end
 
+  add_index "products", ["category_id", "status"], name: "index_products_on_category_id_and_status"
   add_index "products", ["name"], name: "index_products_on_name"
 
   create_table "properties", force: true do |t|
@@ -120,6 +155,8 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.datetime "updated_at"
   end
 
+  add_index "properties", ["product_id"], name: "index_properties_on_product_id"
+
   create_table "replies", force: true do |t|
     t.integer  "owner_id"
     t.integer  "comment_id"
@@ -127,6 +164,8 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "replies", ["comment_id"], name: "index_replies_on_comment_id"
 
   create_table "skucates", force: true do |t|
     t.string   "name1"
@@ -138,6 +177,9 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.string   "value2"
   end
 
+  add_index "skucates", ["name1", "value1", "name2", "value2"], name: "index_skucates_on_name1_and_value1_and_name2_and_value2"
+  add_index "skucates", ["product_id"], name: "index_skucates_on_product_id"
+
   create_table "skulists", force: true do |t|
     t.float    "price"
     t.string   "icon_url"
@@ -148,6 +190,8 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.float    "oldprice"
   end
 
+  add_index "skulists", ["skucate_id"], name: "index_skulists_on_skucate_id"
+
   create_table "stores", force: true do |t|
     t.string   "name"
     t.integer  "owner_id"
@@ -156,6 +200,8 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.string   "background"
     t.string   "slogan"
   end
+
+  add_index "stores", ["owner_id"], name: "index_stores_on_owner_id"
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -167,7 +213,7 @@ ActiveRecord::Schema.define(version: 20141025070220) do
     t.string   "province"
     t.string   "city"
     t.string   "address"
-    t.integer  "phone"
+    t.integer  "phone",           limit: 5
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

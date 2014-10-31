@@ -96,6 +96,11 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resources :collecting_relationships, only: [:new, :create, :destroy]
   resources :cars 
+  resources :messages, only: [:index, :destroy] do 
+    collection do 
+      get :unreadmessages
+    end
+  end
 
   match '/search', to: 'products#search', via: 'get'
   match '/signin', to: 'sessions#create', via: 'post'

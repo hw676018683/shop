@@ -19,7 +19,7 @@ class Admin::PropertiesController < ApplicationController
   def update
     message = {}
     @property = Property.find_by(id: params[:id])
-    if @property.update(property_params)
+    if @property.update_attributes(property_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'

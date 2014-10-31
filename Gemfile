@@ -1,5 +1,6 @@
 
-source 'https://rubygems.org'
+# source 'https://rubygems.org'
+source 'http://ruby.taobao.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -51,6 +52,7 @@ gem 'will_paginate'
 
 group :development do 
   gem 'quiet_assets'
+  # gem 'rails-indexes', '~> 0.0.1'
   # gem "better_errors"
   # gem "binding_of_caller"
 end

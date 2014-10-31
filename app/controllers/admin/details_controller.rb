@@ -19,7 +19,7 @@ class Admin::DetailsController < ApplicationController
   def update
     message = {}
     @detail = Detail.find_by(id: params[:id])
-    if @detail.update(detail_params)
+    if @detail.update_attributes(detail_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'

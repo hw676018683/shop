@@ -1,5 +1,5 @@
 json.cache! [@product] do
-  json.(@product, :id, :name, :category_id)
+  json.(@product, :id, :name, :category_id, :price)
   json.main_img image_path @product.main_img_url
   json.cache! [:imglists, @product.imglists.collect(&:updated_at).max] do
     json.imglist do
@@ -26,7 +26,7 @@ json.cache! [@product] do
   end
   json.cache! [:skucates, @product.skucates.collect(&:updated_at).max] do
     json.skucate do
-      json.array! @product.skucates do |skucate|
+      json.array! @product.skucates.includes(:skulist) do |skucate|
         json.(skucate, :id, :name1, :value1, :name2, :value2)
         json.(skucate.skulist, :price, :oldprice, :quantity)
       end

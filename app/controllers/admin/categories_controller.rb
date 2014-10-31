@@ -23,7 +23,7 @@ class Admin::CategoriesController < ApplicationController
   def update
     message = {}
     @category = Category.find_by(id: params[:id])
-    if @category.update(category_params)
+    if @category.update_attributes(category_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'

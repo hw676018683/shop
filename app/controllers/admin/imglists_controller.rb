@@ -20,7 +20,7 @@ class Admin::ImglistsController < ApplicationController
   def update
     message = {}
     @imglist = Imglist.find_by(id: params[:id])
-    if @imglist.update(img: params[:img])
+    if @imglist.update_attributes(img: params[:img])
       message[:code] = 'success'
     else
       message[:code] = 'failure'

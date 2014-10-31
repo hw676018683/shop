@@ -1,5 +1,6 @@
 class Admin::Owner < ActiveRecord::Base
   has_one :store
+  has_many :messages
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, uniqueness: { case_sensitive: false },

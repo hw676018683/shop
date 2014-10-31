@@ -21,7 +21,7 @@ class Admin::SkucatesController < ApplicationController
     message = {}
     @skucate = Skucate.find_by(id: params[:id])
     if @skucate.skulist.price <= params[:price].to_i 
-      if @skucate.skulist.update(skulist_params)
+      if @skucate.skulist.update_attributes(skulist_params)
         message[:code] = 'success'
       else
         message[:code] = 'failure'
@@ -29,7 +29,8 @@ class Admin::SkucatesController < ApplicationController
       end
     else
       oldprice = @skucate.skulist.price
-       if @skucate.skulist.update(price: params[:price], quantity: params[:quantity], oldprice: oldprice)
+       if @skucate.skulist.update_attributes(price: params[:price], quantity: params[:quantity], oldprice: oldprice)
+        @skucate.product.send_message(3)
         message[:code] = 'success'
       else
         message[:code] = 'failure'

@@ -55,7 +55,7 @@ class Admin::ProductsController < ApplicationController
   def update
     message = {}
     @product = Product.find(id: params[:id])
-    if @product.update(product_params)
+    if @product.update_attributes(product_params)
       message[:code] = 'success'
     else
       message[:code] = 'failure'
@@ -76,6 +76,7 @@ class Admin::ProductsController < ApplicationController
     @product = Product.find_by(id: params[:id])
     if @owner.store.products.where(status: true).include? @product
       @product.update_attribute('status', false)
+      @product.send_messgae(2)
       message[:code] = 'success'
     else
       message[:code] = 'failure'
