@@ -2,14 +2,16 @@ class Admin::ProductsController < ApplicationController
 
   before_action :owner_exist?
 
-  def create 
+  def create
     message = {}
     @properties = []
     @skucates = []
     @skulists = []
     price = []
     quantity = []
-    flag1 = true
+    #flag1: property验证是否通过
+    flag1 = true 
+    #flag2: skucate验证是否通过
     flag2 = true
     @product = @owner.store.products.build(product_params)
     properties = JSON.parse(params[:property])
@@ -21,7 +23,6 @@ class Admin::ProductsController < ApplicationController
       end 
     end
     skucates = JSON.parse(params[:skucate])
-
     skucates.each do |skucate|
       cate = Skucate.new(name1: skucate['name1'], value1: skucate['value1'], name2: skucate['name2'], value2: skucate['value2'])
       list = Skulist.new(price: skucate['price'], quantity: skucate['quantity'])
@@ -44,6 +45,10 @@ class Admin::ProductsController < ApplicationController
         @skulists[index].skucate_id = @skucates[index].id
         @skulists[index].save
       end
+      @properties.each do |property| 
+        property.product_id = @product.id
+        property.save
+      end
       message[:code] = 'success'
       message[:product_id] = @product.id
     else
@@ -54,7 +59,13 @@ class Admin::ProductsController < ApplicationController
 
   def update
     message = {}
-    @product = Product.find(id: params[:id])
+    @product = Product.find_by(id: params[:id])
+    if @product.nil?
+      message[:code] = 'failure'
+      message[:error] = 'id isnot fount'
+      render json: message
+      return
+    end
     if @product.update_attributes(product_params)
       message[:code] = 'success'
     else
@@ -76,7 +87,7 @@ class Admin::ProductsController < ApplicationController
     @product = Product.find_by(id: params[:id])
     if @owner.store.products.where(status: true).include? @product
       @product.update_attribute('status', false)
-      @product.send_messgae(2)
+      @product.send_message(2)
       message[:code] = 'success'
     else
       message[:code] = 'failure'
@@ -100,16 +111,16 @@ class Admin::ProductsController < ApplicationController
 
   def show_up_products
     if params[:page]
-      @products = @owner.store.products.where(status: true).paginate(page: params[:page], per_page: 10)
+      @products = @owner.store.products.where(status: true).order(updated_at: :desc).paginate(page: params[:page], per_page: 10)
     else
-      @products = @owner.store.products.where(status: true).paginate(page: 1, per_page: 10)
+      @products = @owner.store.products.where(status: true).order(updated_at: :desc).paginate(page: 1, per_page: 10)
     end
     render 'show.json.jbuilder'
   end
 
 
   def show_down_products
-    @products = @owner.store.products.where(status: false)
+    @products = @owner.store.products.where(status: false).order(updated_at: :desc)
     render 'show.json.jbuilder'
   end
 

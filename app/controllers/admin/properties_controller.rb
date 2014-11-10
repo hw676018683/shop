@@ -5,6 +5,12 @@ class Admin::PropertiesController < ApplicationController
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
+    if @product.nil?
+      message[:code] = 'failure'
+      message[:error] = 'product_id isnot fount'
+      render json: message
+      return
+    end
     @property = @product.properties.build(property_params)
     if @property.save
       message[:code] = 'success'
@@ -19,6 +25,12 @@ class Admin::PropertiesController < ApplicationController
   def update
     message = {}
     @property = Property.find_by(id: params[:id])
+    if @property.nil?
+      message[:code] = 'failure'
+      message[:error] = 'id isnot fount'
+      render json: message
+      return
+    end
     if @property.update_attributes(property_params)
       message[:code] = 'success'
     else

@@ -2,17 +2,8 @@ namespace :db do
   desc "Fill database with sample data"
   task populate1: :environment do
     make_pictures
-  end 
-
-  task populate2: :environment do
     make_products1
-  end 
-
-  task populate3: :environment do
     make_products2
-  end 
-
-  task populate4: :environment do
     make_details
   end 
 
@@ -62,7 +53,7 @@ def make_details
     @imglist.img.store! File.open(File.expand_path(file)) 
     @imglist.save
   end
-  2.times do |n|
+  3.times do |n|
     file = Dir["public/public/upload/s#{n+5}*.jpg"].first
     @detail = Detail.find_by(id: n+1)
     @detail.img.store! File.open(File.expand_path(file))
@@ -160,3 +151,4 @@ end
 
 
 
+ 

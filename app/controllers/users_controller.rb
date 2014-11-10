@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   # before_action :test
-  before_action :user_exist1?, except: [:create, :nosign_id]
+  before_action :user_exist?, except: [:create, :nosign_id]
   before_action :product_exist?, only: [:follow, :unfollow]
   before_action :store_exist?, only: [:collect, :uncollect]
 
@@ -33,7 +33,6 @@ class UsersController < ApplicationController
   end
 
   def follow
-    logger.info("xx")
     message = {}
     @product = Product.find(params[:product_id])
     if !@user.follow? @product
@@ -145,7 +144,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def user_exist1?
+  def user_exist?
     @user = User.find_by(remember_token: User.encrypt(params[:remember_token]), id: params[:id])
     if @user.nil?
       message = {}

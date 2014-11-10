@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
   has_many :properties, dependent: :destroy
   has_many :imglists, dependent: :destroy
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :messages
 
   has_many :following_relationships, foreign_key: :followed_id

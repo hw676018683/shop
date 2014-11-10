@@ -5,6 +5,12 @@ class Admin::DetailsController < ApplicationController
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
+    if @product.nil?
+      message[:code] = 'failure'
+      message[:error] = 'product_id isnot fount'
+      render json: message
+      return
+    end
     @detail = @product.details.build(detail_params)
     if @detail.save
       message[:code] = 'success'
@@ -19,6 +25,12 @@ class Admin::DetailsController < ApplicationController
   def update
     message = {}
     @detail = Detail.find_by(id: params[:id])
+    if @detail.nil?
+      message[:code] = 'failure'
+      message[:error] = 'id isnot fount'
+      render json: message
+      return
+    end
     if @detail.update_attributes(detail_params)
       message[:code] = 'success'
     else

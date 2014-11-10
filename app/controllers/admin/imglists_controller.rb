@@ -5,6 +5,12 @@ class Admin::ImglistsController < ApplicationController
   def create
     message = {}
     @product = Product.find_by(id: params[:product_id])
+    if @product.nil?
+      message[:code] = 'failure'
+      message[:error] = 'product_id isnot fount'
+      render json: message
+      return
+    end
     last_order = @product.imglists.collect(&:order).max || 0
     @imglist = @product.imglists.build(img: params[:img], order: last_order+1)
     if @imglist.save
@@ -20,6 +26,12 @@ class Admin::ImglistsController < ApplicationController
   def update
     message = {}
     @imglist = Imglist.find_by(id: params[:id])
+    if @imglist.nil?
+      message[:code] = 'failure'
+      message[:error] = 'id isnot fount'
+      render json: message
+      return
+    end
     if @imglist.update_attributes(img: params[:img])
       message[:code] = 'success'
     else

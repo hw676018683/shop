@@ -87,7 +87,6 @@ Rails.application.routes.draw do
         end
       end
       resources :details, only: [:create, :update, :destroy]
-      resources :details , only: [:create, :update, :destroy]
     end
     resources :categories, only: [:create, :index, :update]
     resources :stores, only: :update

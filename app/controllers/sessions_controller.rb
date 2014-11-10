@@ -9,7 +9,9 @@ class SessionsController < ApplicationController
       message[:code] = 'success'
       message[:user_id] = @user.id
       message[:remember_token] = remember_token
-      add_to_cart(@user)
+      if params[:nosign_id]
+        add_to_cart(@user)
+      end
     else
       message[:code] = 'failure' 
     end

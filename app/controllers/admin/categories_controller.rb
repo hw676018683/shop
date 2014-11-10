@@ -23,6 +23,12 @@ class Admin::CategoriesController < ApplicationController
   def update
     message = {}
     @category = Category.find_by(id: params[:id])
+    if @category.nil?
+      message[:code] = 'failure'
+      message[:error] = 'id isnot fount'
+      render json: message
+      return
+    end
     if @category.update_attributes(category_params)
       message[:code] = 'success'
     else

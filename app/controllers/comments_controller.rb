@@ -44,6 +44,7 @@ class CommentsController < ApplicationController
   end
 
   def show comment,json
+    json.user_id comment.user.id
     json.name comment.user.name
     json.(comment, :id, :content)
     json.time comment.created_at.utc
