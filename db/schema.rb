@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031075509) do
+ActiveRecord::Schema.define(version: 20141112123934) do
 
   create_table "admin_owners", force: true do |t|
     t.string   "email"
@@ -175,22 +175,13 @@ ActiveRecord::Schema.define(version: 20141031075509) do
     t.integer  "product_id"
     t.string   "name2"
     t.string   "value2"
+    t.decimal  "price",      precision: 10, scale: 2
+    t.integer  "quantity"
+    t.decimal  "oldprice",   precision: 10, scale: 2
   end
 
   add_index "skucates", ["name1", "value1", "name2", "value2"], name: "index_skucates_on_name1_and_value1_and_name2_and_value2"
   add_index "skucates", ["product_id"], name: "index_skucates_on_product_id"
-
-  create_table "skulists", force: true do |t|
-    t.float    "price"
-    t.string   "icon_url"
-    t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "skucate_id"
-    t.float    "oldprice"
-  end
-
-  add_index "skulists", ["skucate_id"], name: "index_skulists_on_skucate_id"
 
   create_table "stores", force: true do |t|
     t.string   "name"

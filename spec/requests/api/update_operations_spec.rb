@@ -50,17 +50,6 @@ describe 'Update operations' do
       json = JSON.parse(response.body)
       expect(json['code']).to eq 'failure'
     end
-
-    # it 'should fail when parameters is invalid' do
-    #   imglist = create(:imglist)
-    #   parameters = {
-    #     img: nil,
-    #     remember_token: @remember_token
-    #   }
-    #   put "/admin/products/#{imglist.product.id}/imglists/#{imglist.id}", parameters
-    #   json =JSON.parse(response.body)
-    #   expect(json['code']).to eq 'failure'
-    # end
   end
 
    describe 'PUT /admin/products/:product_id/details/:id' do
@@ -106,15 +95,14 @@ describe 'Update operations' do
     it 'should update a skucate'do
       user = User.first
       product = create(:product, price: 3000, quantity: 20)
-      skucate = create(:skucate, product_id: product.id)
-      skulist = create(:skulist, price: 3000, quantity: 20, skucate_id: skucate.id)
-      user.follow! skulist.skucate.product
+      skucate = create(:skucate, product_id: product.id, price: 3000, quantity: 20)
+      user.follow! product
       expect{
-        put "/admin/products/#{product.id}/skucates/#{skucate.id}", attributes_for(:skulist, price: 2000, quantity: 10, remember_token: @remember_token)
+        put "/admin/products/#{product.id}/skucates/#{skucate.id}", attributes_for(:skucate, price: 2000, quantity: 10, remember_token: @remember_token)
       }.to change(Message, :count).by 1
       json =JSON.parse(response.body)
       expect(json['code']).to eq 'success'
-      expect(assigns(:skucate).skulist.oldprice).to eq 3000
+      expect(assigns(:skucate).oldprice).to eq 3000
       expect(assigns(:skucate).product.quantity).to eq 10
       expect(assigns(:skucate).product.price).to eq 2000
     end
@@ -127,8 +115,8 @@ describe 'Update operations' do
     end
 
     it 'should fail when parameters is invalid' do
-      skulist = create(:skulist)
-      put "/admin/products/#{skulist.skucate.product.id}/skucates/#{skulist.skucate.id}", attributes_for(:skulist, price: nil, remember_token: @remember_token)
+      skucate = create(:skucate)
+      put "/admin/products/#{skucate.product.id}/skucates/#{skucate.id}", attributes_for(:skucate, price: nil, remember_token: @remember_token)
       json =JSON.parse(response.body)
       expect(json['code']).to eq 'failure'
     end

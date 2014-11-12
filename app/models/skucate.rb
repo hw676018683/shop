@@ -1,11 +1,12 @@
 class Skucate < ActiveRecord::Base
   belongs_to :product, touch: true
   
-  has_one :skulist, dependent: :destroy
   has_many :cars
   has_many :nosign_cars
 
   validate :at_least_one_skucate
+  validates :price, presence: true
+  validates :quantity, presence: true
 
 
   def at_least_one_skucate

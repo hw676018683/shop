@@ -6,8 +6,8 @@ json.array! @items do |item|
   json.quantity item.quantity
   json.skucate do 
     json.skucate_id item.skucate_id
-    json.price item.skucate.skulist.price
-    json.oldprice item.skucate.skulist.oldprice
+    json.price item.skucate.price
+    json.oldprice item.skucate.oldprice
     json.value1 item.skucate.value1
     json.value2 item.skucate.value2
   end

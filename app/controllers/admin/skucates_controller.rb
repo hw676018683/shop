@@ -13,7 +13,6 @@ class Admin::SkucatesController < ApplicationController
     end
     @skucate = @product.skucates.build(skucate_params)
     if @skucate.save
-      @skucate.create_skulist!(skulist_params)
       @product.quantity += params[:quantity].to_i
       if @product.price > params[:price].to_f
         @product.price = params[:price].to_f
@@ -37,13 +36,13 @@ class Admin::SkucatesController < ApplicationController
       render json: message
       return
     end
-    old_quantity = @skucate.skulist.quantity 
-    if @skucate.skulist.price <= params[:price].to_f
-      if @skucate.skulist.update_attributes(skulist_params)
+    old_quantity = @skucate.quantity 
+    if @skucate.price <= params[:price].to_f
+      if @skucate.update_attributes(price: params[:price], quantity: params[:quantity])
         @skucate.product.quantity += params[:quantity].to_i-old_quantity
         price = []
         @skucate.product.skucates.each do |skucate|
-          price << skucate.skulist.price
+          price << skucate.price
         end
         @skucate.product.update_attribute('price',price.min)
         message[:code] = 'success'
@@ -52,8 +51,8 @@ class Admin::SkucatesController < ApplicationController
         message[:error] = @skucate.errors
       end
     else
-      oldprice = @skucate.skulist.price
-       if @skucate.skulist.update_attributes(price: params[:price], quantity: params[:quantity], oldprice: oldprice)
+      oldprice = @skucate.price
+       if @skucate.update_attributes(price: params[:price], quantity: params[:quantity], oldprice: oldprice)
         @skucate.product.send_message(3)
         @skucate.product.quantity += params[:quantity].to_i-old_quantity
         if @skucate.product.price > params[:price].to_f
@@ -78,11 +77,7 @@ class Admin::SkucatesController < ApplicationController
   private
 
   def skucate_params
-    params.permit(:value1, :name1, :name2, :value2)
-  end
-
-  def skulist_params
-    params.permit(:price, :quantity)
+    params.permit(:value1, :name1, :name2, :value2, :price, :quantity)
   end
 
 end

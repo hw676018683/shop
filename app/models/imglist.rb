@@ -3,5 +3,5 @@ class Imglist < ActiveRecord::Base
 
   mount_uploader :img, AvatarUploader
 
-  # validates :img, presence: true
+  validates :img, presence: true 
 end

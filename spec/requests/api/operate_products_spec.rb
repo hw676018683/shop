@@ -123,15 +123,8 @@ describe 'Operation API:' do
         properties = []
         product = build(:product, store_id: store.id)
         3.times do |n|
-          skucate = build(:skucate, product_id: product.id)
-          skulist = build(:skulist, skucate_id: skucate.id, price: 3001+n)
-          skucate_json = {
-            name1: skucate.name1,
-            value1: skucate.value1,
-            price: skulist.price,
-            quantity: skulist.quantity
-          }
-          skucates << skucate_json
+          skucate = build(:skucate, product_id: product.id, price: 3001+n)
+          skucates << skucate
         end
         properties << build(:property, product_id: product.id)
         properties << build(:property, product_id: product.id)
@@ -150,7 +143,6 @@ describe 'Operation API:' do
           .and(change(Message, :count).by(1))
           .and(change(Property, :count).by(3))
           .and(change(Skucate, :count).by(3))
-          .and(change(Skulist, :count).by(3))
         json = JSON.parse(response.body)
         expect(json['code']).to eq 'success'
         expect(assigns(:product).price).to eq 3001
@@ -162,15 +154,8 @@ describe 'Operation API:' do
       properties = []
       product = build(:product, store_id: Store.first.id, name: nil)
       3.times do |n|
-        skucate = build(:skucate, product_id: product.id)
-        skulist = build(:skulist, skucate_id: skucate.id, price: 3001+n)
-        skucate_json = {
-          name1: skucate.name1,
-          value1: skucate.value1,
-          price: skulist.price,
-          quantity: skulist.quantity
-        }
-        skucates << skucate_json
+        skucate = build(:skucate, product_id: product.id, price: 3001+n)
+        skucates << skucate
       end
       properties << build(:property, product_id: product.id)
       properties << build(:property, product_id: product.id)

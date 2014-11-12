@@ -48,13 +48,14 @@
   3.times do |n|
     2.times do |m|
       @product.skucates.create!(name1: '颜色', value1: "颜色-#{n+1}",
-                            name2: '大小', value2: "大小-#{m+1}")
+                            name2: '大小', value2: "大小-#{m+1}",
+                            price: @product.price-rand(100),
+                            quantity: 30+rand(10),
+                            oldprice: @product.price
+                            )
     end
   end
-  @product.skucates.each do |skucate|
-    skucate.create_skulist!(price: @product.price-rand(100),
-                            quantity: 30+skucate.id, oldprice: @product.price)
-  end
+
   4.times do |n|
     @product.imglists.create!()
   end

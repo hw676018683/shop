@@ -28,13 +28,13 @@ describe 'Shop car API:' do
 
     describe 'GET /cars' do
       it 'should display products added into the car' do 
-        skulist = create(:skulist)
-        create(:car, user_id: @user_id, skucate_id: skulist.skucate.id)
-        create(:car, user_id: @user_id, skucate_id: skulist.skucate.id)
+        skucate = create(:skucate)
+        create(:car, user_id: @user_id, skucate_id: skucate.id)
+        create(:car, user_id: @user_id, skucate_id: skucate.id)
         get '/cars', remember_token: @remember_token
         json = JSON.parse(response.body)
         expect(json.size).to eq 2
-        expect(json[0]['skucate']['value1']).to eq skulist.skucate.value1
+        expect(json[0]['skucate']['value1']).to eq skucate.value1
       end
     end
 
@@ -82,13 +82,13 @@ describe 'Shop car API:' do
 
     describe 'GET /cars' do
       it 'should display products added into the nosign_car' do 
-        skulist = create(:skulist)
-        create(:nosign_car, nosign_id: @nosign_id, skucate_id: skulist.skucate.id)
-        create(:nosign_car, nosign_id: @nosign_id, skucate_id: skulist.skucate.id)
+        skucate = create(:skucate)
+        create(:nosign_car, nosign_id: @nosign_id, skucate_id: skucate.id)
+        create(:nosign_car, nosign_id: @nosign_id, skucate_id: skucate.id)
         get '/cars', nosign_id: @nosign_id
         json = JSON.parse(response.body)
         expect(json.size).to eq 2
-        expect(json[0]['skucate']['value1']).to eq skulist.skucate.value1
+        expect(json[0]['skucate']['value1']).to eq skucate.value1
       end
     end
 

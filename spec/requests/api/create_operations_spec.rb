@@ -28,6 +28,12 @@ describe 'Create operation' do
       json = JSON.parse(response.body)
       expect(json['code']).to eq 'failure'
     end
+
+    it 'should fail when parameters is invalid' do
+      post "/admin/products/#{Product.first.id}/imglists", attributes_for(:imglist, img: nil, remember_token: @remember_token)
+      json =JSON.parse(response.body)
+      expect(json['code']).to eq 'failure'
+    end
   end
 
   describe 'POST /admin/products/:product_id/properties' do
@@ -55,18 +61,9 @@ describe 'Create operation' do
   describe 'POST /admin/products/:product_id/skucates' do
     it 'should create a skucate' do
       product = create(:product)
-      skucate = build(:skucate, product_id: product.id)
-      skulist =build(:skulist, skucate_id: skucate, price: 2000)
-      parameters = {
-        name1: skucate.name1,
-        value1: skucate.value1,
-        price: skulist.price,
-        quantity: skulist.quantity,
-        remember_token: @remember_token
-      }
       expect{
-        post "/admin/products/#{product.id}/skucates",parameters
-      }.to change(Skucate, :count).by(1).and(change(Skulist, :count).by(1))
+        post "/admin/products/#{product.id}/skucates", attributes_for(:skucate, price: 2000, remember_token: @remember_token)
+      }.to change(Skucate, :count).by(1)
       json = JSON.parse(response.body)
       expect(json['code']).to eq 'success'
       expect(assigns(:product).quantity).to eq 60
@@ -74,31 +71,13 @@ describe 'Create operation' do
     end
 
     it 'should fail when parameters is invalid' do
-      skucate = build(:skucate)
-      skulist =build(:skulist, skucate_id: skucate, price: 2000)
-      parameters = {
-        value2: 'test',
-        value1: skucate.value1,
-        price: skulist.price,
-        quantity: skulist.quantity,
-        remember_token: @remember_token
-      }
-      post "/admin/products/#{Product.first.id}/skucates", parameters
+      post "/admin/products/#{Product.first.id}/skucates", attributes_for(:skucate, name2: 'haha', remember_token: @remember_token)
       json = JSON.parse(response.body)
       expect(json['code']).to eq 'failure'
     end
 
     it 'should fail when product isnot found' do
-      skucate = build(:skucate)
-      skulist =build(:skulist, skucate_id: skucate, price: 2000)
-      parameters = {
-        name1: skucate.name1,
-        value1: skucate.value1,
-        price: skulist.price,
-        quantity: skulist.quantity,
-        remember_token: @remember_token
-      }
-      post "/admin/products/-1/skucates", parameters
+      post "/admin/products/-1/skucates", attributes_for(:skucate, remember_token: @remember_token)
       json = JSON.parse(response.body)
       expect(json['code']).to eq 'failure'
     end

@@ -1,3 +1,4 @@
+require 'pry'
 class Admin::ImglistsController < ApplicationController
   
   before_action :owner_exist?

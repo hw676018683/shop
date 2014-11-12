@@ -26,9 +26,9 @@ json.cache! [@product] do
   end
   json.cache! [:skucates, @product.skucates.collect(&:updated_at).max] do
     json.skucate do
-      json.array! @product.skucates.includes(:skulist) do |skucate|
+      json.array! @product.skucates do |skucate|
         json.(skucate, :id, :name1, :value1, :name2, :value2)
-        json.(skucate.skulist, :price, :oldprice, :quantity)
+        json.(skucate, :price, :oldprice, :quantity)
       end
     end
   end

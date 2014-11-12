@@ -6,7 +6,6 @@ class Admin::ProductsController < ApplicationController
     message = {}
     @properties = []
     @skucates = []
-    @skulists = []
     price = []
     quantity = []
     #flag1: property验证是否通过
@@ -24,26 +23,22 @@ class Admin::ProductsController < ApplicationController
     end
     skucates = JSON.parse(params[:skucate])
     skucates.each do |skucate|
-      cate = Skucate.new(name1: skucate['name1'], value1: skucate['value1'], name2: skucate['name2'], value2: skucate['value2'])
-      list = Skulist.new(price: skucate['price'], quantity: skucate['quantity'])
+      cate = Skucate.new(skucate)
       price << skucate['price'].to_i
       quantity << skucate['quantity'].to_i
-      if cate.invalid? | list.invalid?
+      if cate.invalid?
         flag2 = false
       else
         @skucates << cate
-        @skulists << list
       end
     end
     if @product.valid? & flag1 & flag2
       @product.price = price.min
       @product.quantity = quantity.sum
       @product.save
-      @skucates.each_index do |index|
-        @skucates[index].product_id = @product.id
-        @skucates[index].save
-        @skulists[index].skucate_id = @skucates[index].id
-        @skulists[index].save
+      @skucates.each do |skucate|
+        skucate.product_id = @product.id
+        skucate.save
       end
       @properties.each do |property| 
         property.product_id = @product.id
