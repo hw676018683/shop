@@ -4,13 +4,7 @@ class Admin::PropertiesController < ApplicationController
 
   def create
     message = {}
-    @product = Product.find_by(id: params[:product_id])
-    if @product.nil?
-      message[:code] = 'failure'
-      message[:error] = 'product_id isnot fount'
-      render json: message
-      return
-    end
+    @product = Product.find(params[:product_id])
     @property = @product.properties.build(property_params)
     if @property.save
       message[:code] = 'success'
@@ -24,13 +18,7 @@ class Admin::PropertiesController < ApplicationController
 
   def update
     message = {}
-    @property = Property.find_by(id: params[:id])
-    if @property.nil?
-      message[:code] = 'failure'
-      message[:error] = 'id isnot fount'
-      render json: message
-      return
-    end
+    @property = Property.find(params[:id])
     if @property.update_attributes(property_params)
       message[:code] = 'success'
     else
@@ -42,7 +30,7 @@ class Admin::PropertiesController < ApplicationController
 
   def destroy
     message = {}
-    Property.find_by(id: params[:id]).destroy
+    Property.find(params[:id]).destroy
     message[:code] = 'success'
     render json: message
   end

@@ -94,7 +94,7 @@ Rails.application.routes.draw do
   resources :categories
   resources :sessions, only: [:create, :destroy]
   resources :collecting_relationships, only: [:new, :create, :destroy]
-  resources :cars 
+  resources :items 
   resources :messages, only: [:index, :destroy] do 
     collection do 
       get :unreadmessages

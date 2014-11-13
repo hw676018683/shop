@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :following_relationships, foreign_key: :follower_id, dependent: :destroy
   has_many :following_products, through: :following_relationships, source: :followed
 
-  has_many :cars
+  has_many :items
   has_many :comments
 
   has_many :messages

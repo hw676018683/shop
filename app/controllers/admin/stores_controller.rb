@@ -4,7 +4,7 @@ class Admin::StoresController < ApplicationController
 
   def update
     message = {}
-    @store = Store.find_by(id: params[:id])
+    @store = Store.find(params[:id])
     if @store.update_attributes(store_params)
       message[:code] = 'success'
     else

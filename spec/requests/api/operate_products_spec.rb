@@ -20,7 +20,7 @@ describe 'Operation API:' do
       product = Product.first
       user.follow! product
       expect{
-        get "/admin/products/#{product.id}/drop_product",remember_token: @remember_token
+        get "/admin/products/#{product.id}/drop_product", remember_token: @remember_token
         }.to change(Message,:count).by(1) 
       json = JSON.parse(response.body)
       expect(json['code']).to eq 'success'
@@ -30,7 +30,7 @@ describe 'Operation API:' do
   describe 'GET /admin/products/:id/pick_product' do
     it 'shoud put a product on shelves' do
       product = Product.where(status: false).first
-      get "/admin/products/#{product.id}/pick_product",remember_token: @remember_token 
+      get "/admin/products/#{product.id}/pick_product", remember_token: @remember_token 
       json = JSON.parse(response.body)
       expect(json['code']).to eq 'success' 
     end

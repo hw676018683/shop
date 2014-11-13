@@ -8,6 +8,14 @@ class ApplicationController < ActionController::Base
   before_filter :cors_preflight_check
   after_filter :cors_set_access_control_headers
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    record_not_found(exception)
+  end
+
+  rescue_from AuthenticationFailed do |exception|
+    authentication_failed(exception)
+  end
+
 
   private
 
@@ -22,5 +30,19 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
     headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version'
     headers['Access-Control-Max-Age'] = '1728000'
+  end
+
+  def record_not_found exception
+    message = {}
+    message[:code] = 'failure'
+    message[:error] = exception.message
+    render json: message, status: 404
+  end
+
+  def authentication_failed exception
+    message = {}
+    message[:code] = 'failure'
+    message[:error] = exception.message
+    render json: message, status: 401
   end
 end

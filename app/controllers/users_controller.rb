@@ -2,8 +2,6 @@ class UsersController < ApplicationController
 
   # before_action :test
   before_action :user_exist?, except: [:create, :nosign_id]
-  before_action :product_exist?, only: [:follow, :unfollow]
-  before_action :store_exist?, only: [:collect, :uncollect]
 
   def create
     message = {}
@@ -117,31 +115,9 @@ class UsersController < ApplicationController
 
   private
 
-  def test
-      @user = User.first
-  end
-
   def user_params
     params.permit(:email, :password, :password_confirmation,
                                  :province, :city, :address, :phone, :name)
-  end
-
-  def product_exist?
-    message = {}
-    if !Product.find_by(id: params[:product_id])
-      message[:code] = 'failure'
-      message[:message] = "couldn't find Product with 'id'=#{params[:product_id]}"
-      render json: message
-    end
-  end
-
-   def store_exist?
-    message = {}
-    if !Store.find_by(id: params[:store_id])
-      message[:code] = 'failure'
-      message[:message] = "couldn't find Store with 'id'=#{params[:store_id]}"
-      render json: message
-    end
   end
 
   def user_exist?
@@ -149,7 +125,7 @@ class UsersController < ApplicationController
     if @user.nil?
       message = {}
       message[:code] = 'failure'
-      render json: message
+      render json: message, status: 401
     end
   end
 

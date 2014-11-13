@@ -24,13 +24,7 @@ class Admin::DetailsController < ApplicationController
 
   def update
     message = {}
-    @detail = Detail.find_by(id: params[:id])
-    if @detail.nil?
-      message[:code] = 'failure'
-      message[:error] = 'id isnot fount'
-      render json: message
-      return
-    end
+    @detail = Detail.find(params[:id])
     if @detail.update_attributes(detail_params)
       message[:code] = 'success'
     else
@@ -42,7 +36,7 @@ class Admin::DetailsController < ApplicationController
 
   def destroy
     message = {}
-    Detail.find_by(id: params[:id]).destroy
+    Detail.find(params[:id]).destroy
     message[:code] = 'success'
     render json: message
   end

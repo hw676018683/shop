@@ -10,14 +10,8 @@ class MessagesController < ApplicationController
 
   def destroy
     message = {}
-    @message = Message.find_by(id: params[:id])
-    if @message.in? @user.messages
-      @message.destroy
-      message[:code] = 'success'
-    else
-      message[:code] = 'failure'
-      message[:error] = 'No permission'
-    end
+    @user.messages.find(params[:id]).destroy
+    message['code'] = 'success'
     render json: message
   end
 

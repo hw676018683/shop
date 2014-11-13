@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112123934) do
+ActiveRecord::Schema.define(version: 20141113010138) do
 
   create_table "admin_owners", force: true do |t|
     t.string   "email"
@@ -33,16 +33,6 @@ ActiveRecord::Schema.define(version: 20141112123934) do
   end
 
   add_index "carousels", ["store_id"], name: "index_carousels_on_store_id"
-
-  create_table "cars", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "skucate_id"
-    t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "cars", ["user_id"], name: "index_cars_on_user_id"
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -107,6 +97,17 @@ ActiveRecord::Schema.define(version: 20141112123934) do
 
   add_index "imglists", ["product_id"], name: "index_imglists_on_product_id"
 
+  create_table "items", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "skucate_id"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "nosign_id"
+  end
+
+  add_index "items", ["user_id"], name: "index_items_on_user_id"
+
   create_table "messages", force: true do |t|
     t.integer  "user_id"
     t.integer  "store_id"
@@ -120,16 +121,6 @@ ActiveRecord::Schema.define(version: 20141112123934) do
   end
 
   add_index "messages", ["user_id"], name: "index_messages_on_user_id"
-
-  create_table "nosign_cars", force: true do |t|
-    t.integer  "skucate_id"
-    t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "nosign_id"
-  end
-
-  add_index "nosign_cars", ["nosign_id"], name: "index_nosign_cars_on_nosign_id"
 
   create_table "products", force: true do |t|
     t.string   "name"

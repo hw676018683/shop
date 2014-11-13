@@ -1,17 +1,10 @@
-require 'pry'
 class Admin::ImglistsController < ApplicationController
   
   before_action :owner_exist?
 
   def create
     message = {}
-    @product = Product.find_by(id: params[:product_id])
-    if @product.nil?
-      message[:code] = 'failure'
-      message[:error] = 'product_id isnot fount'
-      render json: message
-      return
-    end
+    @product = Product.find(params[:product_id])
     last_order = @product.imglists.collect(&:order).max || 0
     @imglist = @product.imglists.build(img: params[:img], order: last_order+1)
     if @imglist.save
@@ -26,13 +19,7 @@ class Admin::ImglistsController < ApplicationController
 
   def update
     message = {}
-    @imglist = Imglist.find_by(id: params[:id])
-    if @imglist.nil?
-      message[:code] = 'failure'
-      message[:error] = 'id isnot fount'
-      render json: message
-      return
-    end
+    @imglist = Imglist.find(params[:id])
     if @imglist.update_attributes(img: params[:img])
       message[:code] = 'success'
     else
@@ -54,15 +41,9 @@ class Admin::ImglistsController < ApplicationController
 
   def destroy
     message = {}
-    Imglist.find_by(id: params[:id]).destroy
+    Imglist.find(params[:id]).destroy
     message[:code] = 'success'
     render json: message
-  end
-
-  private
-
-  def test
-    @owner = Admin::Owner.first
   end
 
 end

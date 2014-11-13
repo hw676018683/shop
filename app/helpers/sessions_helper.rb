@@ -6,7 +6,8 @@ module SessionsHelper
     if @user.nil?
       message = {}
       message[:code] = 'failure'
-      render json: message
+      message[:error] = "Counldn't find the user"
+      render json: message, status: 401
     end
   end
 
@@ -16,9 +17,12 @@ module SessionsHelper
     if @owner.nil?
       message = {}
       message[:code] = 'failure'
-      render json: message
+      message[:error] = "Counldn't find the owner"
+      render json: message, status: 401
     end
   end
 
+  class AuthenticationFailed < StandardError
+  end
 
 end

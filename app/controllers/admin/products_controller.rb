@@ -48,19 +48,14 @@ class Admin::ProductsController < ApplicationController
       message[:product_id] = @product.id
     else
       message[:code] = 'failure'
+      message[:error] = 'Validation failed'
     end
     render json: message
   end
 
   def update
     message = {}
-    @product = Product.find_by(id: params[:id])
-    if @product.nil?
-      message[:code] = 'failure'
-      message[:error] = 'id isnot fount'
-      render json: message
-      return
-    end
+    @product = Product.find(params[:id])
     if @product.update_attributes(product_params)
       message[:code] = 'success'
     else
@@ -72,35 +67,24 @@ class Admin::ProductsController < ApplicationController
 
   def destroy
     message = {}
-    Product.find_by(id: params[:id]).destroy
+    Product.find(params[:id]).destroy
     message[:code] = 'success'
     render json: message
   end
 
   def drop_product
     message = {}
-    @product = Product.find_by(id: params[:id])
-    if @owner.store.products.where(status: true).include? @product
-      @product.update_attribute('status', false)
-      @product.send_message(2)
-      message[:code] = 'success'
-    else
-      message[:code] = 'failure'
-      message[:errors] = 'No permission to drop or has been dropped'
-    end
+    @product = @owner.store.products.where(status: true).find(params[:id])
+    @product.update_attribute('status', false)
+    @product.send_message(2)
+    message[:code] = 'success'
     render json: message
   end
 
   def pick_product
     message = {}
-    @product = Product.find_by(id: params[:id])
-    if @owner.store.products.where(status: false).include? @product
-      @product.update_attribute('status', true)
-      message[:code] = 'success'
-    else
-      message[:code] = 'failure'
-      message[:errors] = 'No permission to do or has been done'
-    end
+    @owner.store.products.where(status: false).find(params[:id]).update_attribute('status', true)
+    message[:code] = 'success'
     render json: message
   end
 

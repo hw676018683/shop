@@ -29,13 +29,7 @@ class Admin::SkucatesController < ApplicationController
 
   def update
     message = {}
-    @skucate = Skucate.find_by(id: params[:id])
-    if @skucate.nil?
-      message[:code] = 'failure'
-      message[:error] = 'id isnot fount'
-      render json: message
-      return
-    end
+    @skucate = Skucate.find(params[:id])
     old_quantity = @skucate.quantity 
     if @skucate.price <= params[:price].to_f
       if @skucate.update_attributes(price: params[:price], quantity: params[:quantity])
@@ -69,7 +63,7 @@ class Admin::SkucatesController < ApplicationController
 
   def destroy
     message = {}
-    Skucate.find_by(id: params[:id]).destroy
+    Skucate.find(params[:id]).destroy
     message[:code] = 'success'
     render json: message 
   end

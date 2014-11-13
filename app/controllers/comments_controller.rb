@@ -16,18 +16,13 @@ class CommentsController < ApplicationController
 
   def destroy
     message = {}
-    @comment = Comment.find_by(id: params[:id])
-    if @user.comments.include? @comment
-      @comment.destroy
-      message[:code] = 'success'
-    else
-      message[:code] = 'failure'
-    end
+    @user.comments.find(params[:id]).destroy
+    message['code'] = 'success'
     render json: message
   end
 
   def index
-    @product = Product.find_by(id: params[:product_id])
+    @product = Product.find(params[:product_id])
     @comments = @product.comments.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
     render json: to_builder(@comments).target!
     
