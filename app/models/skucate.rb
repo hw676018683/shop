@@ -1,8 +1,7 @@
 class Skucate < ActiveRecord::Base
   belongs_to :product, touch: true
   
-  has_many :cars
-  has_many :nosign_cars
+  has_many :items
 
   validate :at_least_one_skucate
   validates :price, presence: true

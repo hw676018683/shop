@@ -17,7 +17,7 @@ describe 'POST /signin' do
   end
 end
 
-describe 'POSt /users' do
+describe 'POST /users' do
   it 'should succeed with valid attributes' do 
     expect{post '/users', attributes_for(:user)}.to change(User, :count).by(1)
     json = JSON.parse(response.body)

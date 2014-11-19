@@ -22,7 +22,4 @@ module SessionsHelper
     end
   end
 
-  class AuthenticationFailed < StandardError
-  end
-
 end

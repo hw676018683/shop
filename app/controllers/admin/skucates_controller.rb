@@ -4,13 +4,7 @@ class Admin::SkucatesController < ApplicationController
 
   def create
     message = {}
-    @product = Product.find_by(id: params[:product_id])
-    if @product.nil?
-      message[:code] = 'failure'
-      message[:error] = 'product_id isnot fount'
-      render json: message
-      return
-    end
+    @product = Product.find(params[:product_id])
     @skucate = @product.skucates.build(skucate_params)
     if @skucate.save
       @product.quantity += params[:quantity].to_i

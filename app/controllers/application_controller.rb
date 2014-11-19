@@ -1,3 +1,4 @@
+require_dependency 'shop/exception'
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -12,7 +13,7 @@ class ApplicationController < ActionController::Base
     record_not_found(exception)
   end
 
-  rescue_from AuthenticationFailed do |exception|
+  rescue_from Shop::AuthenticationFailed do |exception|
     authentication_failed(exception)
   end
 
@@ -45,4 +46,5 @@ class ApplicationController < ActionController::Base
     message[:error] = exception.message
     render json: message, status: 401
   end
+
 end

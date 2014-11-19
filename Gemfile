@@ -33,7 +33,7 @@ gem 'multi_json'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
+# gem 'spring',        group: :development
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
@@ -51,6 +51,8 @@ gem 'will_paginate'
 
 group :development do 
   gem 'quiet_assets'
+  gem 'pry'
+  gem 'pry-byebug'
   # gem 'rails-indexes', '~> 0.0.1'
   # gem "better_errors"
   # gem "binding_of_caller"
