@@ -13,6 +13,8 @@ class Product < ActiveRecord::Base
   has_many :following_relationships, foreign_key: :followed_id
   has_many :followers, through: :following_relationships, source: :follower
 
+  scope :status_true, -> { where(status: true).order(:id) }
+
   validates :name, presence: true
   validates :category_id, presence: true
 

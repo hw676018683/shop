@@ -6,4 +6,6 @@ class Message < ActiveRecord::Base
   belongs_to :owner
   belongs_to :reply
 
+  scope :ordered, -> { order(created_at: :desc) }
+
 end

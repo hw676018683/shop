@@ -54,7 +54,13 @@ class User < ActiveRecord::Base
     self.following_relationships.find_by(followed_id: product.id)
   end
 
-  
+  def self.nosign_id
+    nosign_id = SecureRandom.hex(10)
+    if Item.uniq.pluck(:nosign_id).include? nosign_id
+      User.nosign_id
+    end
+    nosign_id
+  end
 
   private
 

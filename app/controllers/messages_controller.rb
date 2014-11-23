@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   before_action :user_exist?
 
   def index
-    @messages = @user.messages.order(created_at: :desc).paginate page: params[:page], per_page: 10    
+    @messages = @user.messages.ordered.paginate(page: params[:page], per_page: 10)   
     render 'index.json.jbuilder'
     @messages.where(status: false).update_all(status: true, updated_at: Time.now)
   end

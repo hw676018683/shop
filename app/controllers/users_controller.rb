@@ -84,7 +84,7 @@ class UsersController < ApplicationController
 
   def nosign_id
     message = {}
-    message[:nosign_id] = SecureRandom.hex(10)
+    message[:nosign_id] = User.nosign_id
     render json: message
   end
 

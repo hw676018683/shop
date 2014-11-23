@@ -1,12 +1,11 @@
 class Skucate < ActiveRecord::Base
   belongs_to :product, touch: true
   
-  has_many :items
+  has_many :items, dependent: :destroy
 
   validate :at_least_one_skucate
   validates :price, presence: true
   validates :quantity, presence: true
-
 
   def at_least_one_skucate
     case [self.name1, self.name2, self.value1, self.value2].reject(&:blank?).size
@@ -22,4 +21,5 @@ class Skucate < ActiveRecord::Base
       errors[:base] << "Please enter one complete skucate"
     end
   end
+
 end
