@@ -4,43 +4,20 @@ class Admin::ProductsController < ApplicationController
 
   def create
     message = {}
+    return_hash = {}
     @properties = []
     @skucates = []
-    price = []
-    quantity = []
-    #flag1: property验证是否通过
-    flag1 = true 
-    #flag2: skucate验证是否通过
-    flag2 = true
-    @product = @owner.store.products.build(product_params)
-    properties = JSON.parse(params[:property])
-    properties.each do |property|
-      if Property.new(property).invalid?
-        flag1 = false
-      else 
-        @properties << Property.new(property)
-      end 
-    end
-    skucates = JSON.parse(params[:skucate])
-    skucates.each do |skucate|
-      cate = Skucate.new(skucate)
-      price << skucate['price'].to_i
-      quantity << skucate['quantity'].to_i
-      if cate.invalid?
-        flag2 = false
-      else
-        @skucates << cate
-      end
-    end
-    if @product.valid? & flag1 & flag2
-      @product.price = price.min
-      @product.quantity = quantity.sum
+    @properties = Property.build_by_json(params[:property])
+    return_hash = Product.build_product_skucates(product_params, params[:skucate], @owner.store.id)
+    if  (@properties != false) & (return_hash != false)
+      @product = return_hash[:product]
+      @skucates = return_hash[:skucates] 
       @product.save
       @skucates.each do |skucate|
         skucate.product_id = @product.id
         skucate.save
       end
-      @properties.each do |property| 
+      @properties.each do |property|
         property.product_id = @product.id
         property.save
       end

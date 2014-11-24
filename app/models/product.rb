@@ -22,7 +22,6 @@ class Product < ActiveRecord::Base
 
   after_create 'send_message(1)'
   
-
   def send_message code
     case code
     when 1
@@ -40,4 +39,39 @@ class Product < ActiveRecord::Base
       end
     end
   end
+
+  def self.build_product_skucates product_params, json, store_id
+    return_hash = {}
+    @skucates = []
+    price = []
+    quantity = []
+    @product = Product.new(product_params)
+    if @product.invalid?
+      return false
+    end
+    skucates = JSON.parse(json)
+    skucates.each do |skucate|
+      skucate = Skucate.new(Product.skucate_params(skucate))
+      price << skucate.price
+      quantity << skucate.quantity
+      if skucate.invalid?
+        return false
+      else
+        @skucates << skucate
+      end
+    end
+    @product.store_id = store_id
+    @product.price = price.min
+    @product.quantity = quantity.sum
+    return_hash[:product] = @product
+    return_hash[:skucates] = @skucates
+    return_hash
+  end
+
+  private
+
+  def self.skucate_params skucate
+    ActionController::Parameters.new(skucate).permit(:name1, :value1, :name2, :value2, :price, :quantity)
+  end
+
 end
